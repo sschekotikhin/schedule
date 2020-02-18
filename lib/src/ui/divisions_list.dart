@@ -10,11 +10,7 @@ class DivisionsList extends StatelessWidget {
   Widget build(BuildContext context) {
     _bloc.fetchDivisions();
 
-    return Scaffold(
-      appBar: new AppBar(
-        title: new Text('Расписание ОГУ'),
-      ),
-      body: new StreamBuilder(
+    return new StreamBuilder(
         stream: _bloc.divisions,
         builder: (context, AsyncSnapshot<Divisions> snapshot) {
           if (snapshot.hasData) {
@@ -27,8 +23,7 @@ class DivisionsList extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         },
-      ),
-    );
+      );
   }
 
   Widget buildList(AsyncSnapshot<Divisions> snapshot) {
