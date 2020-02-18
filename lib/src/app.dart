@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
+
 import 'package:schedule/src/ui/divisions_list.dart';
 import 'package:schedule/src/ui/appbar.dart';
 import 'package:schedule/src/ui/drawer.dart';
 import 'package:schedule/src/ui/schedule_bottom_navbar.dart';
-import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
   @override

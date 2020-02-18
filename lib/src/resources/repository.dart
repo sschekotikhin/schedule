@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'divisions.dart';
+import 'package:schedule/src/resources/divisions.dart';
 
 class Repository {
   final divisionsProvider = DivisionsProvider();
