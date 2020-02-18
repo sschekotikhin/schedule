@@ -18,8 +18,8 @@ class ScheduleBottomNavBarState extends State<ScheduleBottomNavBar> {
   Widget build(BuildContext context) {
     return new BottomNavigationBar(
       items: [
-        BottomNavigationBarItem(icon: Icon(Icons.school), title: Text('Студент')),
         BottomNavigationBarItem(icon: Icon(Icons.work), title: Text('Преподаватель')),
+        BottomNavigationBarItem(icon: Icon(Icons.school), title: Text('Студент')),
         BottomNavigationBarItem(icon: Icon(Icons.business), title: Text('Аудитория'))
       ],
       currentIndex: _currentTabIndex,
