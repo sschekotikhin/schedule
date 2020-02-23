@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:schedule/src/resources/variables.dart';
 import 'package:schedule/src/ui/schedule_selector.dart';
@@ -21,7 +23,24 @@ class App extends StatelessWidget {
         bottomNavigationBar: ScheduleBottomNavBar(defaultScheduleMod),
         body: new SlidingUpPanel(
           controller: panelController,
-          panel: new ScheduleSelector(defaultScheduleMod),
+          panel: new Center(
+            child: new Column(
+              children: <Widget>[
+                new Row(
+                  children: <Widget>[
+                    new IconButton(icon: Icon(Icons.arrow_back), onPressed: () {log('back');}),
+                    new Expanded(
+                      child: new Text('Институт', textAlign: TextAlign.center)
+                    ),
+                    new IconButton(icon: Icon(Icons.arrow_forward), onPressed: () {log('forward');})
+                  ],
+                ),
+                Expanded(
+                  child: new ScheduleSelector(defaultScheduleMod, selectorMode.division)
+                )
+              ]
+            )
+          ),
           body: null,
           slideDirection: SlideDirection.DOWN,
           borderRadius: slidingPanelRadius,

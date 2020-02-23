@@ -20,7 +20,7 @@ class Divisions {
 class DivisionsProvider {
   Client client = new Client();
   
-  Future<Divisions> fetchDivisions() async {
+  Future<Divisions> fetch() async {
     final response = await client.get('http://oreluniver.ru/schedule/divisionlistforstuds');
 
     if (response.statusCode == 200) {

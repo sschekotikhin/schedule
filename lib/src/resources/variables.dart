@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:schedule/src/blocs/divisions_bloc.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-final DivisionsBloc bloc = new DivisionsBloc();
+enum selectorMode {
+  division,
+  course,
+  group
+}
 
 BorderRadius slidingPanelRadius = new BorderRadius.only(
   bottomLeft: Radius.circular(24.0),

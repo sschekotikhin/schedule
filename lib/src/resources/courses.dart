@@ -22,7 +22,7 @@ class CoursesProvider {
 
   Client client = new Client();
 
-  Future<Courses> fetchCourses() async {
+  Future<Courses> fetch() async {
     final response = await client.get('http://oreluniver.ru/schedule/$_divisionId/kurslist');
 
     if (response.statusCode == 200) {

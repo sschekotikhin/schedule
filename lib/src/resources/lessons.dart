@@ -15,6 +15,8 @@ class Lessons {
                             json['Name'], json['SecondName']));
     });
   }
+
+  List<Lesson> get items => _items;
 }
 
 class LessonsProvider {
