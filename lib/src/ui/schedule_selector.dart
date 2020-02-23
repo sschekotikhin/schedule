@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
-
-import 'package:schedule/src/blocs/divisions_bloc.dart';
 import 'package:schedule/src/resources/divisions.dart';
 import 'package:schedule/src/resources/variables.dart';
 
-class DivisionsList extends StatelessWidget {
+class ScheduleSelector extends StatefulWidget {
+  final int _tabIndex;
+
+  ScheduleSelector(this._tabIndex);
+
+  @override
+  createState() => new ScheduleSelectorState(_tabIndex);
+}
+
+class ScheduleSelectorState extends State<ScheduleSelector> {
+  int _tabIndex;
+
+  ScheduleSelectorState(this._tabIndex);
+
   @override
   Widget build(BuildContext context) {
     bloc.fetchDivisions();
@@ -21,7 +32,7 @@ class DivisionsList extends StatelessWidget {
         return new Center(
           child: CircularProgressIndicator(),
         );
-      },
+      }, 
     );
   }
 
@@ -34,8 +45,7 @@ class DivisionsList extends StatelessWidget {
             padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 1.0, bottom: 1.0),
             child: new Column(
               children: <Widget>[
-                new Text('Название: ${snapshot.data.items[index].shortTitle}'),
-                new Text('Полное название: ${snapshot.data.items[index].title}'),
+                new Text(snapshot.data.items[index].shortTitle),
                 if (snapshot.data.items.length - 1 != index) new Divider(),
               ],
             ),

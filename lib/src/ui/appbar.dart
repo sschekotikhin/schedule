@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedule/src/resources/variables.dart';
 
 AppBar ScheduleAppBar() {
   return new AppBar(
@@ -9,7 +10,9 @@ AppBar ScheduleAppBar() {
         children: <Widget>[
           new Expanded(
             child: new FlatButton(
-              onPressed: () {}, 
+              onPressed: () {
+                panelController.isPanelOpen ? panelController.close() : panelController.open();
+              }, 
               child: new Text('ИПАИТ, 3 курс, 71ПГ'), 
               textColor: Colors.white
             )
