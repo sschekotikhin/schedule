@@ -14,4 +14,10 @@ BorderRadius slidingPanelRadius = new BorderRadius.only(
 
 PanelController panelController = new PanelController(); 
 
-int defaultScheduleMod = 1;
+int defaultScheduleMode = 1;
+
+List scheduleSelectorStates = [
+  [],
+  [selectorMode.division, selectorMode.course, selectorMode.group],
+  []
+];
