@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:schedule/src/blocs/bloc.dart';
+import 'package:schedule/src/resources/functions.dart';
 import 'package:schedule/src/resources/variables.dart';
 
 class ScheduleSelector extends StatefulWidget {
@@ -17,22 +20,34 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
   int _stateIndex;
   selectorMode _mode;
 
-  int _divisionId = -1, _course = -1;
+  bool _loadData = false;
+
+  set tabIndex(int tabIndex) => _tabIndex = tabIndex;
+  set stateIndex(int stateIndex) => _stateIndex = stateIndex;
+
+  set loadData(bool loadData) => _loadData = loadData;
 
   bool _isBackButtonActive = false, _isForwardButtonActive = false;
 
   ScheduleSelectorState(this._tabIndex, this._stateIndex) {
-    _mode = scheduleSelectorStates[_tabIndex][_stateIndex];
-    _isBackButtonActive = !(_stateIndex - 1 < 0);
-    _isForwardButtonActive = !(_stateIndex + 1 >= scheduleSelectorStates[_tabIndex].length) &&
-                              (_divisionId != -1) && (_course != -1);
+    scheduleSelectorState = this;
   }
-
 
   @override
   Widget build(BuildContext context) {
-    Bloc bloc = new Bloc(_mode, divisionId: _divisionId, course: _course);
-    bloc.fetch();
+    Bloc bloc;
+    _mode = scheduleSelectorStates[_tabIndex][_stateIndex];
+
+    _isBackButtonActive = !(_stateIndex - 1 < 0);
+    _isForwardButtonActive = !(_stateIndex + 1 >= scheduleSelectorStates[_tabIndex].length) &&
+                              ((_tabIndex == 0 && !isTeacherDataEmpty()) ||
+                              (_tabIndex == 1 && !isStudentDataEmpty()) ||
+                              (_tabIndex == 2 && !isClassroomDataEmpty()));
+
+    if (_loadData) {
+      bloc = new Bloc(_mode);
+      bloc.fetch();
+    }
 
     return new Center(
       child: new Column(
@@ -47,7 +62,7 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
             ],
           ),
           Expanded(
-            child: new StreamBuilder(
+            child: _loadData ? new StreamBuilder(
               stream: bloc.data,
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
@@ -60,7 +75,7 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
                   child: CircularProgressIndicator(),
                 );
               }, 
-            )
+            ) : new Center()
           )
         ]
       )
@@ -79,15 +94,36 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
                 new FlatButton(
                   onPressed: () {
                     switch (_mode) {
-                      case selectorMode.division:
-                        _divisionId = snapshot.data.items[index].id;
+                      case selectorMode.divisionForStudent:
+                        divisionForStudentId = snapshot.data.items[index].id;
                         break;
 
                       case selectorMode.course:
-                        _course = snapshot.data.items[index].course;
+                        course = snapshot.data.items[index].course;
                         break;
 
                       case selectorMode.group:
+                        groupId = snapshot.data.items[index].id;
+                        break;
+
+                      case selectorMode.divisionForTeacher:
+                        divisionForTeacherId = snapshot.data.items[index].id;
+                        break;
+
+                      case selectorMode.department:
+                        departmentId = snapshot.data.items[index].id;
+                        break;
+                      
+                      case selectorMode.teacher:
+                        teacherId = snapshot.data.items[index].id;
+                        break;
+
+                      case selectorMode.building:
+                        building = snapshot.data.items[index].building;
+                        break;
+
+                      case selectorMode.classroom:
+                        classroom = snapshot.data.items[index].number;
                         break;
                     }
 
@@ -107,7 +143,7 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
   String getButtonText(var item) {
     try {
       switch (_mode) {
-        case selectorMode.division:
+        case selectorMode.divisionForStudent:
           return item.title;
 
         case selectorMode.course:
@@ -115,6 +151,21 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
 
         case selectorMode.group:
           return item.title;
+
+        case selectorMode.divisionForTeacher:
+          return item.title;
+
+        case selectorMode.department:
+          return item.title;
+        
+        case selectorMode.teacher:
+          return item.fullName;
+
+        case selectorMode.building:
+          return item.building;
+
+        case selectorMode.classroom:
+          return item.number;
       }
     } catch (e) {
       return '';
@@ -123,7 +174,7 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
 
   String getHeaderText() {
     switch (_mode) {
-        case selectorMode.division:
+        case selectorMode.divisionForStudent:
           return 'Выберите институт/факультет';
 
         case selectorMode.course:
@@ -131,6 +182,21 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
 
         case selectorMode.group:
           return 'Выберите группу';
+
+        case selectorMode.divisionForTeacher:
+          return 'Выберите институт/факультет';
+
+        case selectorMode.department:
+          return 'Выберите кафедру';
+        
+        case selectorMode.teacher:
+          return 'Выберите преподавателя';
+
+        case selectorMode.building:
+          return 'Выберите корпус';
+
+        case selectorMode.classroom:
+          return 'Выберите аудиторию';
       }
   }
 
@@ -150,6 +216,7 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
       if (_stateIndex + 1 == scheduleSelectorStates[_tabIndex].length - 1) {
         _isForwardButtonActive = false;
       } else if (_stateIndex + 1 >= scheduleSelectorStates[_tabIndex].length) {
+        lastSelectorStates[_tabIndex] = _stateIndex;
         //loadSchedule
         return;
       }

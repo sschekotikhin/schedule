@@ -23,9 +23,11 @@ class LessonsProvider {
   int _groupId;
   int _timestamp;
 
+  LessonsProvider(this._groupId);
+
   Client client = new Client();
   
-  Future<Lessons> fetchLessons() async {
+  Future<Lessons> fetch() async {
     final response = await client.get('http://oreluniver.ru/schedule//$_groupId///$_timestamp/printschedule');
 
     if (response.statusCode == 200) {
