@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:schedule/src/blocs/bloc.dart';
 import 'package:schedule/src/resources/functions.dart';
 import 'package:schedule/src/resources/variables.dart';
+import 'package:schedule/src/ui/schedule_selector_button.dart';
 
 class ScheduleSelector extends StatefulWidget {
   final int _tabIndex;
@@ -28,6 +29,8 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
   set loadData(bool loadData) => _loadData = loadData;
 
   bool _isBackButtonActive = false, _isForwardButtonActive = false;
+
+  String header = '';
 
   ScheduleSelectorState(this._tabIndex, this._stateIndex) {
     scheduleSelectorState = this;
@@ -104,6 +107,7 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
 
                       case selectorMode.group:
                         groupId = snapshot.data.items[index].id;
+                        header = snapshot.data.items[index].title;
                         break;
 
                       case selectorMode.divisionForTeacher:
@@ -116,6 +120,7 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
                       
                       case selectorMode.teacher:
                         teacherId = snapshot.data.items[index].id;
+                        header = snapshot.data.items[index].fullName;
                         break;
 
                       case selectorMode.building:
@@ -124,6 +129,7 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
 
                       case selectorMode.classroom:
                         classroom = snapshot.data.items[index].number;
+                        header = building + ' корпус, ' + classroom;
                         break;
                     }
 
@@ -217,6 +223,10 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
         _isForwardButtonActive = false;
       } else if (_stateIndex + 1 >= scheduleSelectorStates[_tabIndex].length) {
         lastSelectorStates[_tabIndex] = _stateIndex;
+        selectorButtonState.setState(() {
+          selectorHeaders[_tabIndex] = header;
+        });
+        
         //loadSchedule
         return;
       }

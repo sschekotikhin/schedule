@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schedule/src/ui/schedule_selector.dart';
+import 'package:schedule/src/ui/schedule_selector_button.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 enum selectorMode {
@@ -22,9 +23,11 @@ PanelController panelController = new PanelController();
 
 ScheduleSelectorState scheduleSelectorState;
 
+ScheduleSelectorButtonState selectorButtonState;
+
 int defaultScheduleMode = 1;
 
-int scheduleMode = 1;
+int scheduleMode = 1; //load
 
 List scheduleSelectorStates = [
   [selectorMode.divisionForTeacher, selectorMode.department, selectorMode.teacher],
@@ -32,9 +35,11 @@ List scheduleSelectorStates = [
   [selectorMode.building, selectorMode.classroom]
 ];
 
-List<int> lastSelectorStates = [0, 0, 0];
+List<int> lastSelectorStates = [0, 0, 0]; //load
 
-int divisionForStudentId = -1, course = -1, groupId = -1,
-    divisionForTeacherId = -1, departmentId = -1, teacherId = -1;
+List<String> selectorHeaders = ['Выберите преподавателя', 'Выберите группу', 'Выберите аудиторию']; //load
 
-String building = '', classroom = '';
+int divisionForStudentId = -1, course = -1, groupId = -1, //load
+    divisionForTeacherId = -1, departmentId = -1, teacherId = -1; //load
+
+String building = '', classroom = ''; //load
