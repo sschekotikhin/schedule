@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:schedule/src/resources/variables.dart';
+import 'package:schedule/src/ui/schedule_selector_button.dart';
 
 AppBar ScheduleAppBar() {
   return new AppBar(
@@ -8,11 +10,7 @@ AppBar ScheduleAppBar() {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           new Expanded(
-            child: new FlatButton(
-              onPressed: () {}, 
-              child: new Text('ИПАИТ, 3 курс, 71ПГ'), 
-              textColor: Colors.white
-            )
+            child: new ScheduleSelectorButton(scheduleMode)
           )
         ]
       ),

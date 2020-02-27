@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:schedule/src/resources/functions.dart';
+import 'package:schedule/src/resources/variables.dart';
+import 'package:schedule/src/ui/schedule_selector.dart';
 
 class ScheduleBottomNavBar extends StatefulWidget {
   final int _tabIndex;
@@ -26,7 +29,16 @@ class ScheduleBottomNavBarState extends State<ScheduleBottomNavBar> {
       type: BottomNavigationBarType.fixed,
       onTap: (int tabIndex) {
         setState(() {
-          _currentTabIndex = tabIndex;
+          _currentTabIndex = scheduleMode = tabIndex;
+          
+          scheduleSelectorState.setState(() {
+            scheduleSelectorState.tabIndex = tabIndex;
+            scheduleSelectorState.stateIndex = lastSelectorStates[tabIndex];
+          });
+
+          selectorButtonState.setState(() {
+            selectorButtonState.tabIndex = tabIndex;
+          });
         });
       },
     );
