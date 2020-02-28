@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:schedule/src/resources/functions.dart';
 import 'package:schedule/src/resources/variables.dart';
+import 'package:schedule/src/ui/daysTabBar.dart';
 import 'package:schedule/src/ui/schedule_selector.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -22,7 +23,7 @@ class App extends StatelessWidget {
         body: new SlidingUpPanel(
           controller: panelController,
           panel: new ScheduleSelector(scheduleMode, lastSelectorStates[scheduleMode]),
-          body: null,
+          body: DaysTabBar(),
           slideDirection: SlideDirection.DOWN,
           borderRadius: slidingPanelRadius,
           minHeight: 0,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart';
 import 'package:schedule/src/models/lesson.dart';
@@ -23,7 +24,7 @@ class LessonsProvider {
   int _groupId;
   int _timestamp;
 
-  LessonsProvider(this._groupId);
+  LessonsProvider(this._groupId, this._timestamp);
 
   Client client = new Client();
   

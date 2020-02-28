@@ -5,7 +5,7 @@ class Lesson {
   String _lessonType;
   int _lessonNumber;
   int _weekDay;
-  int _housing;
+  String _housing;
   String _roomNumber;
   String _special;
   String _title;
@@ -24,7 +24,7 @@ class Lesson {
   int get subGroupNumber => _subGroupNumber;
   int get lessonNumber => _lessonNumber;
   int get weekDay => _weekDay;
-  int get housing => _housing;
+  String get housing => _housing;
   int get employyeId => _employeeId;
 
   String get subjectTitle => _subjectTitle;
@@ -35,4 +35,14 @@ class Lesson {
   String get lastName => _lastName;
   String get firstName => _firstName;
   String get midName => _midName;
+
+  static List<Lesson> lessonsByDay(int day, List<Lesson> lessons) {
+    List<Lesson> collection = lessons.where((lesson) {
+      return lesson.weekDay == day;
+    }).toList();
+
+    collection.sort((l1, l2) => l1.lessonNumber.compareTo(l2.lessonNumber));
+  
+    return collection;
+  }
 }

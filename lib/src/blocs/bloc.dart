@@ -5,25 +5,10 @@ import 'package:schedule/src/resources/courses.dart';
 import 'package:schedule/src/resources/departments.dart';
 import 'package:schedule/src/resources/divisions.dart';
 import 'package:schedule/src/resources/groups.dart';
+import 'package:schedule/src/resources/lessons.dart';
 import 'package:schedule/src/resources/teachers.dart';
 
 import 'package:schedule/src/resources/variables.dart';
-
-// class DivisionsBloc {
-//   final _repository = new DivisionsRepository();
-//   final _divisionsFetcher = new PublishSubject<Divisions>();
-
-//   Observable<Divisions> get divisions => _divisionsFetcher.stream;
-
-//   fetchDivisions() async {
-//     Divisions divisions = await _repository.fetchDivisions();
-//     _divisionsFetcher.sink.add(divisions);
-//   }
-
-//   dispose() {
-//     _divisionsFetcher.close();
-//   }
-// }
 
 class Bloc<T> {
   var _provider;
@@ -64,6 +49,11 @@ class Bloc<T> {
         this._provider = ClassroomsProvider(building);
         break;
     }
+  }
+
+  Bloc.fromString(String str) {
+    DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday));
+    this._provider = LessonsProvider(groupId, firstDay.millisecondsSinceEpoch);
   }
   
   Observable<T> get data => _divisionsFetcher.stream;

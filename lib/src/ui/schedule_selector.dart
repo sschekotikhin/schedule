@@ -228,6 +228,8 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
         });
         
         //loadSchedule
+        tabBarViewState.setState((){});
+        panelController.close();
         return;
       }
 
