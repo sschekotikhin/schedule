@@ -39,6 +39,8 @@ class ScheduleBottomNavBarState extends State<ScheduleBottomNavBar> {
           selectorButtonState.setState(() {
             selectorButtonState.tabIndex = tabIndex;
           });
+
+          tabBarViewState.setState(() {});
         });
       },
     );

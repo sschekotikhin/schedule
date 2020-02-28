@@ -51,9 +51,22 @@ class Bloc<T> {
     }
   }
 
-  Bloc.fromString(String str) {
+  Bloc.fromString(int mode) {
     DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday));
-    this._provider = LessonsProvider(groupId, firstDay.millisecondsSinceEpoch);
+
+    switch (mode){
+      case 0:
+        this._provider = LessonsProviderForTeacher(teacherId, firstDay.millisecondsSinceEpoch);
+        break;
+
+      case 1:
+        this._provider = LessonsProvider(groupId, firstDay.millisecondsSinceEpoch);
+        break;
+
+      case 2:
+        this._provider = LessonsProviderForClassroom(building, classroom, firstDay.millisecondsSinceEpoch);
+        break;
+    }
   }
   
   Observable<T> get data => _divisionsFetcher.stream;

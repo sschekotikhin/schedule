@@ -62,7 +62,7 @@ class ScheduleTabBarViewState extends State<ScheduleTabBarView> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    Bloc bloc = new Bloc.fromString('group');
+    Bloc bloc = new Bloc.fromString(scheduleMode);
     bloc.fetch();
 
     return new StreamBuilder(
