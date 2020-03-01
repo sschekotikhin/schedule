@@ -30,6 +30,9 @@ class LessonWidget extends StatelessWidget {
         });
       }
 
+      String leftText = (scheduleMode == 0 || scheduleMode == 1) ? '$_housing-$_roomNumber' : _title;
+      String rightText = (scheduleMode == 1 || scheduleMode == 2) ? _fullName : _title;
+
       return new Card (
         elevation: 0.0,
         margin: EdgeInsets.all(5.0),
@@ -47,14 +50,13 @@ class LessonWidget extends StatelessWidget {
               new Padding(padding: EdgeInsets.only(top: 2.5, bottom: 2.5), child: Text(_subjectTitle, textAlign: TextAlign.left)),
               //special
               new Padding(padding: EdgeInsets.only(top: 2.5, bottom: 2.5), child: Text('($_lessonType)', textAlign: TextAlign.left)),
-              if (scheduleMode == 0) new Padding(padding: EdgeInsets.only(top: 2.5, bottom: 2.5), child: Text('$_title', textAlign: TextAlign.left)),
               new Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  new Padding(padding: EdgeInsets.only(top: 2.5, bottom: 2.5), child: Text('$_housing-$_roomNumber', textAlign: TextAlign.left)),
-                  new Expanded(child: Padding(padding: EdgeInsets.only(top: 2.5, bottom: 2.5, left: 10.0), child: Text('$_fullName', textAlign: TextAlign.right)))
+                  new Expanded(child: Padding(padding: EdgeInsets.only(top: 2.5, bottom: 2.5), child: Text(leftText, textAlign: TextAlign.left))),
+                  new Expanded(child: Padding(padding: EdgeInsets.only(top: 2.5, bottom: 2.5, left: 10.0), child: Text(rightText, textAlign: TextAlign.right)))
                 ]
               ),
               new Divider(color: Colors.blueGrey, thickness: 1.0, height: 10.0),
