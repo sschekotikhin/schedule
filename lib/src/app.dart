@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:schedule/src/resources/functions.dart';
 import 'package:schedule/src/resources/variables.dart';
 import 'package:schedule/src/ui/daysTabBar.dart';
@@ -14,6 +17,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     setLastSelectorStates();
     return MaterialApp(
+      localizationsDelegates: [GlobalMaterialLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
+      supportedLocales: [const Locale('en'), const Locale('ru')],
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
       home: Scaffold(

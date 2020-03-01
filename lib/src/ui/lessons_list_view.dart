@@ -17,21 +17,21 @@ class LessonsListView extends StatelessWidget {
     if (_snapshot.hasData) {
       List<Lesson> lessons = Lesson.lessonsByDay(_day, _snapshot.data.items);
 
-      return new ListView.builder(
-        itemCount: lessons.length,
-        itemBuilder: (BuildContext context, int index) {
-          return new Container(
-            child: new Padding(
-              padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0, bottom: 5.0),
-              child: new Column(
-                children: <Widget>[
-                  new LessonWidget(0, lessons[index]),
-                ],
-              ),
-            ),
-          );
-        },
-      );
+      if (lessons.isNotEmpty) {
+        return new Padding(
+          padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0, bottom: 5.0),
+          child: ListView.builder(
+            itemCount: 8,
+            itemBuilder: (BuildContext context, int index) {
+              return new LessonWidget(index, Lesson.lessonsByNumber(index + 1, lessons));          
+            }
+          )
+        );
+      } else {
+        return new Center(
+          child: Text('Занятий не найдено')
+        );
+      }
     } else if (_snapshot.hasError) {
       return new Text(_snapshot.error.toString());
     }

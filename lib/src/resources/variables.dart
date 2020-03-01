@@ -34,7 +34,10 @@ ScheduleSelectorState scheduleSelectorState;
 
 ScheduleSelectorButtonState selectorButtonState;
 
+DaysTabBarState daysTabBarState;
 ScheduleTabBarViewState tabBarViewState;
+
+DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday));
 
 int defaultScheduleMode = 1;
 

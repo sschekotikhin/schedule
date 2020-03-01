@@ -11,8 +11,14 @@ class DaysTabBar extends StatefulWidget {
   DaysTabBarState createState() => new DaysTabBarState();
 }
 
-class DaysTabBarState extends State<DaysTabBar> with SingleTickerProviderStateMixin {
+class DaysTabBarState extends State<DaysTabBar> with SingleTickerProviderStateMixin  {
   TabController daysTabController;
+
+  DaysTabBarState() {
+    daysTabBarState = this;
+  }
+
+  TabController get tabController => daysTabController;
   
   @override
   void initState() {
@@ -22,7 +28,7 @@ class DaysTabBarState extends State<DaysTabBar> with SingleTickerProviderStateMi
 
   @override
   Widget build(BuildContext context) { 
-    DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday));
+    //DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday));
 
     return Scaffold (
       appBar: PreferredSize(
@@ -77,8 +83,8 @@ class ScheduleTabBarViewState extends State<ScheduleTabBarView> {
             LessonsListView(4, snapshot),
             LessonsListView(5, snapshot),
             LessonsListView(6, snapshot),
-      ]
-    );
+          ]
+        );
       }
     );
   }
