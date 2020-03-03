@@ -15,10 +15,13 @@ class ScheduleBottomNavBar extends StatefulWidget {
 class ScheduleBottomNavBarState extends State<ScheduleBottomNavBar> {
   int _currentTabIndex = 0;
 
-  ScheduleBottomNavBarState(this._currentTabIndex);
+  ScheduleBottomNavBarState(this._currentTabIndex) {
+    bottomNavBarState = this;
+  }
 
   @override
   Widget build(BuildContext context) {
+    _currentTabIndex = scheduleMode;
     return new BottomNavigationBar(
       items: [
         BottomNavigationBarItem(icon: Icon(Icons.work), title: Text('Преподаватель')),
@@ -30,7 +33,7 @@ class ScheduleBottomNavBarState extends State<ScheduleBottomNavBar> {
       onTap: (int tabIndex) {
         setState(() {
           _currentTabIndex = scheduleMode = tabIndex;
-          
+
           tabBarViewState.setState(() {});
 
           scheduleSelectorState.setState(() {
@@ -41,6 +44,8 @@ class ScheduleBottomNavBarState extends State<ScheduleBottomNavBar> {
           selectorButtonState.setState(() {
             selectorButtonState.tabIndex = tabIndex;
           });
+
+          prefs.setInt('schedule_mode', tabIndex);
         });
       },
     );

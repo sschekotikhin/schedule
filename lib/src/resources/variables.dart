@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:schedule/src/ui/daysTabBar.dart';
+import 'package:schedule/src/ui/schedule_bottom_navbar.dart';
 import 'package:schedule/src/ui/schedule_selector.dart';
 import 'package:schedule/src/ui/schedule_selector_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 enum selectorMode {
@@ -28,18 +30,20 @@ BorderRadius lessonCardRadius = new BorderRadius.only(
   topRight: Radius.circular(10.0)
 );
 
+SharedPreferences prefs;
+
 PanelController panelController = new PanelController();
 
 ScheduleSelectorState scheduleSelectorState;
 
 ScheduleSelectorButtonState selectorButtonState;
 
+ScheduleBottomNavBarState bottomNavBarState;
+
 DaysTabBarState daysTabBarState;
 ScheduleTabBarViewState tabBarViewState;
 
-DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday));
-
-int defaultScheduleMode = 1;
+DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday == 7 ? DateTime.now().weekday - 6 : DateTime.now().weekday));
 
 int scheduleMode = 1; //load
 
@@ -49,7 +53,7 @@ List scheduleSelectorStates = [
   [selectorMode.building, selectorMode.classroom]
 ];
 
-List<int> lastSelectorStates = [0, 0, 0]; //load
+List<int> lastSelectorStates = [0, 0, 0];
 
 List<String> selectorHeaders = ['Выберите преподавателя', 'Выберите группу', 'Выберите аудиторию']; //load
 

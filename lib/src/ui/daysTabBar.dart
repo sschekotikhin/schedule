@@ -24,12 +24,12 @@ class DaysTabBarState extends State<DaysTabBar> with SingleTickerProviderStateMi
   void initState() {
     super.initState();
     daysTabController = new TabController(length: 6, vsync: this);
+    daysTabController.animateTo(DateTime.now().weekday - 1);
   }
 
   @override
   Widget build(BuildContext context) { 
     //DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday));
-
     return Scaffold (
       appBar: PreferredSize(
         child: AppBar(

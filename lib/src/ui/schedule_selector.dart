@@ -6,14 +6,37 @@ import 'package:schedule/src/resources/functions.dart';
 import 'package:schedule/src/resources/variables.dart';
 import 'package:schedule/src/ui/schedule_selector_button.dart';
 
+bool isTeacherDataEmpty() {
+  if (divisionForTeacherId == -1 || departmentId == -1 || teacherId == -1) return true;
+  else return false;
+}
+
+bool isStudentDataEmpty() {
+  if (divisionForStudentId == -1 || course == -1 || groupId == -1) return true;
+    else return false;
+}
+
+bool isClassroomDataEmpty() {
+  if (building == '' || classroom == '') return true;
+    else return false;
+}
+
 class ScheduleSelector extends StatefulWidget {
   final int _tabIndex;
   final int _stateIndex;
 
-  ScheduleSelector(this._tabIndex, this._stateIndex);
+  ScheduleSelector(this._tabIndex, this._stateIndex) {
+    //setLastSelectorStates();
+  }
 
   @override
   createState() => new ScheduleSelectorState(_tabIndex, _stateIndex);
+
+  static void setLastSelectorStates() {
+    lastSelectorStates[0] = isTeacherDataEmpty() ? 0 : 2;
+    lastSelectorStates[1] = isStudentDataEmpty() ? 0 : 2;
+    lastSelectorStates[2] = isClassroomDataEmpty() ? 0 : 1;
+  }
 }
 
 class ScheduleSelectorState extends State<ScheduleSelector> {
@@ -34,6 +57,7 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
 
   ScheduleSelectorState(this._tabIndex, this._stateIndex) {
     scheduleSelectorState = this;
+    //setLastSelectorStates();
   }
 
   @override
@@ -99,37 +123,48 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
                     switch (_mode) {
                       case selectorMode.divisionForStudent:
                         divisionForStudentId = snapshot.data.items[index].id;
+                        prefs.setInt('div_stud_id', divisionForStudentId);
                         break;
 
                       case selectorMode.course:
                         course = snapshot.data.items[index].course;
+                        prefs.setInt('course', course);
                         break;
 
                       case selectorMode.group:
                         groupId = snapshot.data.items[index].id;
                         header = snapshot.data.items[index].title;
+                        prefs.setInt('group_id', groupId);
+                        updateHeaders(1, header);
                         break;
 
                       case selectorMode.divisionForTeacher:
                         divisionForTeacherId = snapshot.data.items[index].id;
+                        prefs.setInt('div_teach_id', divisionForTeacherId);
                         break;
 
                       case selectorMode.department:
                         departmentId = snapshot.data.items[index].id;
+                        prefs.setInt('department_id', departmentId);
                         break;
                       
                       case selectorMode.teacher:
                         teacherId = snapshot.data.items[index].id;
                         header = snapshot.data.items[index].fullName;
+                        prefs.setInt('teacher_id', teacherId);
+                        updateHeaders(0, header);
                         break;
 
                       case selectorMode.building:
                         building = snapshot.data.items[index].building;
+                        prefs.setString('building', building);
                         break;
 
                       case selectorMode.classroom:
                         classroom = snapshot.data.items[index].number;
                         header = building + ' корпус, ' + classroom;
+                        prefs.setString('classroom', classroom);
+                        updateHeaders(2, header);
                         break;
                     }
 
@@ -236,5 +271,14 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
       _isBackButtonActive = true;
       _mode = scheduleSelectorStates[_tabIndex][++_stateIndex];
     });
+  }
+
+  void updateHeaders(int index, String header) {
+    List<String> headers = prefs.getStringList('headers');
+    if (headers == null) {
+      headers = ['','',''];
+    }
+    headers[index] = header;
+    prefs.setStringList('headers', headers);               
   }
 }

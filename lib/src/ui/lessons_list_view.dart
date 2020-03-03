@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule/src/models/lesson.dart';
+import 'package:schedule/src/resources/variables.dart';
 import 'package:schedule/src/blocs/bloc.dart';
 import 'package:schedule/src/ui/lesson_widget.dart';
 
@@ -23,7 +24,10 @@ class LessonsListView extends StatelessWidget {
           child: ListView.builder(
             itemCount: 8,
             itemBuilder: (BuildContext context, int index) {
-              return new LessonWidget(index, Lesson.lessonsByNumber(index + 1, lessons));          
+              return new Column(
+                children: [
+                  LessonWidget(index, Lesson.lessonsByNumber(index + 1, lessons))
+                ]);     
             }
           )
         );
