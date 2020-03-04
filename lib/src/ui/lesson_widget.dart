@@ -35,7 +35,7 @@ class LessonWidget extends StatelessWidget {
 
       return new Card (
         elevation: 0.0,
-        margin: EdgeInsets.all(5.0),
+        margin: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
         color: Colors.white,
         shape: RoundedRectangleBorder (borderRadius: lessonCardRadius),
         child: Container(
@@ -74,26 +74,29 @@ class LessonWidget extends StatelessWidget {
       );
     }
     else {
-      // return new Card (
-      //   elevation: 0.0,
-      //   margin: EdgeInsets.all(2.0),
-      //   color: Colors.white,
-      //   shape: RoundedRectangleBorder (borderRadius: lessonCardRadius),
-      //   child: Container(
-      //     decoration: BoxDecoration(border: Border.all(color: Colors.blueGrey, width: 2.0), borderRadius: lessonCardRadius),
-      //     padding: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
-      //     // alignment: Alignment.center,
-      //     child: new Row(
-      //       mainAxisSize: MainAxisSize.max,
-      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //       children: [
-      //         new Padding(padding: EdgeInsets.only(top: 2.5, bottom: 2.5), child: Text('${_number + 1}', textAlign: TextAlign.left, style: TextStyle(color: Colors.blueGrey))),
-      //         new Padding(padding: EdgeInsets.only(top: 2.5, bottom: 2.5), child: Text('${lessonTime[_number]}', textAlign: TextAlign.right, style: TextStyle(color: Colors.blueGrey)))
-      //       ]
-      //     )
-      //   )
-      // );
-      return Container(height: 0);
+      if (!prefs.getBool('setting_hideEmpty')) {
+        return new Card (
+          elevation: 0.0,
+          margin: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
+          color: Colors.white,
+          shape: RoundedRectangleBorder (borderRadius: lessonCardRadius),
+          child: Container(
+            decoration: BoxDecoration(border: Border.all(color: Colors.blueGrey, width: 2.0), borderRadius: lessonCardRadius),
+            padding: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
+            // alignment: Alignment.center,
+            child: new Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                new Padding(padding: EdgeInsets.only(top: 2.5, bottom: 2.5), child: Text('${_number + 1}', textAlign: TextAlign.left, style: TextStyle(color: Colors.blueGrey))),
+                new Padding(padding: EdgeInsets.only(top: 2.5, bottom: 2.5), child: Text('${lessonTime[_number]}', textAlign: TextAlign.right, style: TextStyle(color: Colors.blueGrey)))
+              ]
+            )
+          )
+        );
+      } else {
+        return Container(height: 0);
+      }
     }
   }
 }

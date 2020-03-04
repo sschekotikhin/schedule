@@ -22,32 +22,35 @@ class ScheduleBottomNavBarState extends State<ScheduleBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     _currentTabIndex = scheduleMode;
-    return new BottomNavigationBar(
-      items: [
-        BottomNavigationBarItem(icon: Icon(Icons.work), title: Text('Преподаватель')),
-        BottomNavigationBarItem(icon: Icon(Icons.school), title: Text('Студент')),
-        BottomNavigationBarItem(icon: Icon(Icons.business), title: Text('Аудитория'))
-      ],
-      currentIndex: _currentTabIndex,
-      type: BottomNavigationBarType.fixed,
-      onTap: (int tabIndex) {
-        setState(() {
-          _currentTabIndex = scheduleMode = tabIndex;
+    return new SizedBox( 
+      height: 58,
+      child: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.work), title: Text('Преподаватель')),
+          BottomNavigationBarItem(icon: Icon(Icons.school), title: Text('Студент')),
+          BottomNavigationBarItem(icon: Icon(Icons.business), title: Text('Аудитория'))
+        ],
+        currentIndex: _currentTabIndex,
+        type: BottomNavigationBarType.fixed,
+        onTap: (int tabIndex) {
+          setState(() {
+            _currentTabIndex = scheduleMode = tabIndex;
 
-          tabBarViewState.setState(() {});
+            tabBarViewState.setState(() {});
 
-          scheduleSelectorState.setState(() {
-            scheduleSelectorState.tabIndex = tabIndex;
-            scheduleSelectorState.stateIndex = lastSelectorStates[tabIndex];
+            scheduleSelectorState.setState(() {
+              scheduleSelectorState.tabIndex = tabIndex;
+              scheduleSelectorState.stateIndex = lastSelectorStates[tabIndex];
+            });
+
+            selectorButtonState.setState(() {
+              selectorButtonState.tabIndex = tabIndex;
+            });
+
+            prefs.setInt('schedule_mode', tabIndex);
           });
-
-          selectorButtonState.setState(() {
-            selectorButtonState.tabIndex = tabIndex;
-          });
-
-          prefs.setInt('schedule_mode', tabIndex);
-        });
-      },
+        },
+      )
     );
   }
 }
