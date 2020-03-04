@@ -36,7 +36,8 @@ class SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       home: Scaffold(
         appBar: AppBar(
           title: Text('Настройки'),

@@ -22,7 +22,8 @@ class App extends StatelessWidget {
       localizationsDelegates: [GlobalMaterialLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
       supportedLocales: [const Locale('en'), const Locale('ru')],
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       home: Scaffold(
         appBar: ScheduleAppBar(),
         drawer: ScheduleDrawer(),

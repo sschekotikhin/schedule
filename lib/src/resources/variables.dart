@@ -43,6 +43,9 @@ ScheduleBottomNavBarState bottomNavBarState;
 DaysTabBarState daysTabBarState;
 ScheduleTabBarViewState tabBarViewState;
 
+ThemeData lightTheme = ThemeData(primarySwatch: Colors.blue, brightness: Brightness.light);
+ThemeData darkTheme = ThemeData(primarySwatch: Colors.blue, brightness: Brightness.dark);
+
 DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday == 7 ? DateTime.now().weekday - 6 : DateTime.now().weekday));
 
 int scheduleMode = 1; //load

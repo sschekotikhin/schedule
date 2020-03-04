@@ -36,10 +36,9 @@ class LessonWidget extends StatelessWidget {
       return new Card (
         elevation: 0.0,
         margin: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
-        color: Colors.white,
         shape: RoundedRectangleBorder (borderRadius: lessonCardRadius),
         child: Container(
-          decoration: BoxDecoration(border: Border.all(color: Colors.blue, width: 2.0), borderRadius: lessonCardRadius),
+          decoration: BoxDecoration(border: Border.all(color: Theme.of(context).primaryColor, width: 2.0), borderRadius: lessonCardRadius),
           padding: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
           // alignment: Alignment.center,
           child: new Column(
@@ -78,10 +77,9 @@ class LessonWidget extends StatelessWidget {
         return new Card (
           elevation: 0.0,
           margin: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
-          color: Colors.white,
           shape: RoundedRectangleBorder (borderRadius: lessonCardRadius),
           child: Container(
-            decoration: BoxDecoration(border: Border.all(color: Colors.blueGrey, width: 2.0), borderRadius: lessonCardRadius),
+            decoration: BoxDecoration(border: Border.all(color: Theme.of(context).primaryColor, width: 2.0), borderRadius: lessonCardRadius),
             padding: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
             // alignment: Alignment.center,
             child: new Row(
