@@ -6,7 +6,9 @@ import 'package:schedule/src/blocs/bloc.dart';
 import 'package:schedule/src/resources/variables.dart';
 import 'package:schedule/src/ui/lessons_list_view.dart';
 
-class DaysTabBar extends StatefulWidget {
+class DaysTabBar extends StatefulWidget with PreferredSizeWidget{
+  Size get preferredSize => new Size.fromHeight(50.0);
+
   @override
   DaysTabBarState createState() => new DaysTabBarState();
 }
@@ -30,21 +32,14 @@ class DaysTabBarState extends State<DaysTabBar> with SingleTickerProviderStateMi
   @override
   Widget build(BuildContext context) { 
     //DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday));
-    return Scaffold (
-      appBar: PreferredSize(
-        child: AppBar(
-          bottom: TabBar(
+    return  TabBar(
             controller: daysTabController,
             isScrollable: true,
             tabs: daysOfWeek.map((day) {
               DateTime currentDay = firstDay.add(new Duration(days: daysOfWeek.indexOf(day)));
               return Tab(text: '$day, ${currentDay.day.toString()}.${currentDay.month.toString().padLeft(2, '0')}');
             }).toList()
-          )
-        ), 
-        preferredSize: Size.fromHeight(50.0)
-      ),
-      body: ScheduleTabBarView(daysTabController)
+         
     );
   }
 }

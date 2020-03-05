@@ -3,12 +3,16 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:schedule/src/resources/functions.dart';
 import 'package:schedule/src/resources/variables.dart';
+import 'package:schedule/src/ui/daysTabBar.dart';
 import 'package:schedule/src/ui/schedule_selector_button.dart';
 
-class ScheduleAppBar extends StatelessWidget implements PreferredSizeWidget {
-  @override
-  Size get preferredSize => new Size.fromHeight(50.0);
+class ScheduleAppBar extends StatefulWidget implements PreferredSizeWidget {
+  Size get preferredSize => new Size.fromHeight(100.0);
 
+  ScheduleAppBarState createState() => ScheduleAppBarState();
+}
+
+class ScheduleAppBarState extends State<ScheduleAppBar> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return new AppBar(
@@ -45,7 +49,8 @@ class ScheduleAppBar extends StatelessWidget implements PreferredSizeWidget {
             });
           });        
         })
-      ]
+      ],
+      bottom: DaysTabBar()
     );
   }
 }

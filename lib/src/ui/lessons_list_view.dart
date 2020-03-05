@@ -20,7 +20,7 @@ class LessonsListView extends StatelessWidget {
 
       if (lessons.isNotEmpty) {
         return new Padding(
-          padding: EdgeInsets.only(left: 0.0, right: 0.0, top: 0.0, bottom: 140.0),
+          padding: EdgeInsets.only(left: 0.0, right: 0.0, top: 0.0, bottom: 190),
           //padding: EdgeInsets.all(0),
           child: ListView.builder(
             itemCount: 8,

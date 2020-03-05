@@ -35,7 +35,7 @@ class App extends StatelessWidget {
               return new SlidingUpPanel(
                 controller: panelController,
                 panel: new ScheduleSelector(scheduleMode, lastSelectorStates[scheduleMode]),
-                body: DaysTabBar(),
+                body: ScheduleTabBarView(daysTabBarState.tabController),
                 slideDirection: SlideDirection.DOWN,
                 borderRadius: slidingPanelRadius,
                 minHeight: 0,

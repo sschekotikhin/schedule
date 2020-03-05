@@ -76,35 +76,38 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
       bloc.fetch();
     }
 
-    return new Center(
-      child: new Column(
-        children: <Widget>[
-          new Row(
-            children: <Widget>[
-              new IconButton(icon: Icon(Icons.arrow_back), onPressed: _isBackButtonActive ? prevState : null),
-              new Expanded(
-                child: new Text(getHeaderText(), textAlign: TextAlign.center)
-              ),
-              new IconButton(icon: Icon(Icons.arrow_forward), onPressed: _isForwardButtonActive ? nextState : null)
-            ],
-          ),
-          Expanded(
-            child: _loadData ? new StreamBuilder(
-              stream: bloc.data,
-              builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  return buildList(snapshot);
-                } else if (snapshot.hasError) {
-                  return new Text(snapshot.error.toString());
-                }
+    return new Container(
+      color: Theme.of(context).canvasColor,
+      child: Center(
+        child: new Column(
+          children: <Widget>[
+            new Row(
+              children: <Widget>[
+                new IconButton(icon: Icon(Icons.arrow_back), onPressed: _isBackButtonActive ? prevState : null),
+                new Expanded(
+                  child: new Text(getHeaderText(), textAlign: TextAlign.center)
+                ),
+                new IconButton(icon: Icon(Icons.arrow_forward), onPressed: _isForwardButtonActive ? nextState : null)
+              ],
+            ),
+            Expanded(
+              child: _loadData ? new StreamBuilder(
+                stream: bloc.data,
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    return buildList(snapshot);
+                  } else if (snapshot.hasError) {
+                    return new Text(snapshot.error.toString());
+                  }
 
-                return new Center(
-                  child: CircularProgressIndicator(),
-                );
-              }, 
-            ) : new Center()
-          )
-        ]
+                  return new Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }, 
+              ) : new Center()
+            )
+          ]
+        )
       )
     );
   }
