@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:schedule/src/resources/functions.dart';
 import 'package:schedule/src/resources/variables.dart';
 import 'package:schedule/src/ui/schedule_selector_button.dart';
 
@@ -29,7 +32,15 @@ class ScheduleAppBar extends StatelessWidget implements PreferredSizeWidget {
             lastDate: DateTime(DateTime.now().year + 1)
           ).then((DateTime day) {
             daysTabBarState.setState(() {
-              firstDay = day.subtract(new Duration(days: day.weekday));
+              firstDay = day.subtract(new Duration(
+                days: day.weekday - 1,
+                hours: day.hour,
+                minutes: day.minute,
+                seconds: day.second,
+                milliseconds: day.millisecond,
+                microseconds: day.microsecond
+              ));
+              firstDay = firstDay.add(new Duration(hours: 3));
               daysTabBarState.tabController.animateTo(day.weekday - 1, curve: Curves.ease, duration: Duration(milliseconds: 250));
             });
           });        

@@ -37,7 +37,7 @@ class DaysTabBarState extends State<DaysTabBar> with SingleTickerProviderStateMi
             controller: daysTabController,
             isScrollable: true,
             tabs: daysOfWeek.map((day) {
-              DateTime currentDay = firstDay.add(new Duration(days: daysOfWeek.indexOf(day) + 1));
+              DateTime currentDay = firstDay.add(new Duration(days: daysOfWeek.indexOf(day)));
               return Tab(text: '$day, ${currentDay.day.toString()}.${currentDay.month.toString().padLeft(2, '0')}');
             }).toList()
           )

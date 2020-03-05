@@ -28,8 +28,8 @@ class SettingsPageState extends State<SettingsPage> {
   void initState() {
     super.initState();
     //set values
-    _autosave = prefs.getBool('setting_autosave');
-    _hideEmpty = prefs.getBool('setting_hideEmpty');
+    _autosave = prefs.getBool('setting_autosave') ?? false;
+    _hideEmpty = prefs.getBool('setting_hideEmpty') ?? false;
   }
 
   @override
