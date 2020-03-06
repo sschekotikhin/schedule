@@ -1,4 +1,3 @@
-import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule/src/ui/drawer.dart';
 
@@ -30,6 +29,8 @@ class SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: lightTheme,
+      darkTheme: darkTheme,
       home: Scaffold(
         appBar: AppBar(
           title: Text('Настройки'),
