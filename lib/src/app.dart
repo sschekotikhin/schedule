@@ -18,7 +18,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     //setPreferences();
     //setLastSelectorStates();
-    return MaterialApp(
+    return new MaterialApp(
       localizationsDelegates: [GlobalMaterialLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
       supportedLocales: [const Locale('en'), const Locale('ru')],
       debugShowCheckedModeBanner: false,
@@ -28,9 +28,9 @@ class App extends StatelessWidget {
         appBar: ScheduleAppBar(),
         drawer: ScheduleDrawer(),
         bottomNavigationBar: ScheduleBottomNavBar(scheduleMode),
-        body: FutureBuilder<String>(
+        body: FutureBuilder(
           future: setPreferences(),
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               return new SlidingUpPanel(
                 controller: panelController,
@@ -57,8 +57,9 @@ class App extends StatelessWidget {
     );
   } 
 
-  Future<String> setPreferences() async {
+  Future setPreferences() async {
     prefs = await SharedPreferences.getInstance();
+
     divisionForStudentId = prefs.getInt('div_stud_id') ?? -1;
     course = prefs.getInt('course') ?? -1;
     groupId = prefs.getInt('group_id') ?? -1;
@@ -75,7 +76,8 @@ class App extends StatelessWidget {
     selectorButtonState.setState(() {
       selectorButtonState.tabIndex = scheduleMode;
     });
-    return 'qwerty';
+
+    return 0;
   }
 }
 

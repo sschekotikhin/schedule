@@ -33,13 +33,12 @@ class DaysTabBarState extends State<DaysTabBar> with SingleTickerProviderStateMi
   Widget build(BuildContext context) { 
     //DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday));
     return  TabBar(
-            controller: daysTabController,
-            isScrollable: true,
-            tabs: daysOfWeek.map((day) {
-              DateTime currentDay = firstDay.add(new Duration(days: daysOfWeek.indexOf(day)));
-              return Tab(text: '$day, ${currentDay.day.toString()}.${currentDay.month.toString().padLeft(2, '0')}');
-            }).toList()
-         
+      controller: daysTabController,
+      isScrollable: true,
+      tabs: daysOfWeek.map((day) {
+        DateTime currentDay = firstDay.add(new Duration(days: daysOfWeek.indexOf(day)));
+        return Tab(text: '$day, ${currentDay.day.toString()}.${currentDay.month.toString().padLeft(2, '0')}');
+      }).toList()
     );
   }
 }

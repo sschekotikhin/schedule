@@ -45,6 +45,7 @@ class ScheduleAppBarState extends State<ScheduleAppBar> with SingleTickerProvide
                 microseconds: day.microsecond
               ));
               firstDay = firstDay.add(new Duration(hours: 3));
+              tabBarViewState.setState((){});
               daysTabBarState.tabController.animateTo(day.weekday - 1, curve: Curves.ease, duration: Duration(milliseconds: 250));
             });
           });        

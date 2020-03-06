@@ -1,3 +1,4 @@
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule/src/ui/daysTabBar.dart';
 import 'package:schedule/src/ui/schedule_bottom_navbar.dart';

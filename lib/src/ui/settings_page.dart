@@ -1,3 +1,4 @@
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule/src/ui/drawer.dart';
 
@@ -9,15 +10,9 @@ class SettingsPage extends StatefulWidget {
 }
 
 class SettingsPageState extends State<SettingsPage> {
-  bool _autosave, _hideEmpty;
+  bool _hideEmpty;
 
-  bool get autosave => _autosave;
-  bool get hideEmpty => _hideEmpty;
-
-  void _autosaveChanged(bool value) => setState((){
-    _autosave = value;
-    prefs.setBool('setting_autosave', value);
-  });
+  bool get getHideEmpty => _hideEmpty;
 
   void _hideEmptyChanged(bool value) => setState(() {
     _hideEmpty = value;
@@ -28,7 +23,6 @@ class SettingsPageState extends State<SettingsPage> {
   void initState() {
     super.initState();
     //set values
-    _autosave = prefs.getBool('setting_autosave') ?? false;
     _hideEmpty = prefs.getBool('setting_hideEmpty') ?? false;
   }
 
@@ -36,8 +30,6 @@ class SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: lightTheme,
-      darkTheme: darkTheme,
       home: Scaffold(
         appBar: AppBar(
           title: Text('Настройки'),
@@ -47,23 +39,17 @@ class SettingsPageState extends State<SettingsPage> {
         //drawer: ScheduleDrawer(),
         body: Center(
           child: Padding(
-            padding: EdgeInsets.all(5.0),
+            padding: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 20.0, right: 20.0),
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text('Сохранение расписания в памяти устройста'), 
-                    Switch(value: _autosave, onChanged: _autosaveChanged)
-                  ]
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Скрыть пустые занятия'), 
+                    Text('Скрывать пустые занятия', style: TextStyle(fontSize: 16)), 
                     Switch(value: _hideEmpty, onChanged: _hideEmptyChanged)
                   ]
-                )
+                ),
+                Divider(thickness: 1.5)
               ]
             )
           )
