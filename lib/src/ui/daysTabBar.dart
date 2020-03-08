@@ -26,7 +26,7 @@ class DaysTabBarState extends State<DaysTabBar> with SingleTickerProviderStateMi
   void initState() {
     super.initState();
     daysTabController = new TabController(length: 6, vsync: this);
-    daysTabController.animateTo(DateTime.now().weekday - 1);
+    daysTabController.animateTo(DateTime.now().weekday == 7 ? 0 : DateTime.now().weekday - 1);
   }
 
   @override
