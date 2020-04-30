@@ -21,22 +21,22 @@ bool isClassroomDataEmpty() {
     else return false;
 }
 
+void setLastSelectorStates() {
+  lastSelectorStates[0] = isTeacherDataEmpty() ? 0 : 2;
+  lastSelectorStates[1] = isStudentDataEmpty() ? 0 : 2;
+  lastSelectorStates[2] = isClassroomDataEmpty() ? 0 : 1;
+}
+
 class ScheduleSelector extends StatefulWidget {
   final int _tabIndex;
   final int _stateIndex;
 
   ScheduleSelector(this._tabIndex, this._stateIndex) {
-    //setLastSelectorStates();
+    setLastSelectorStates();
   }
 
   @override
-  createState() => new ScheduleSelectorState(_tabIndex, _stateIndex);
-
-  static void setLastSelectorStates() {
-    lastSelectorStates[0] = isTeacherDataEmpty() ? 0 : 2;
-    lastSelectorStates[1] = isStudentDataEmpty() ? 0 : 2;
-    lastSelectorStates[2] = isClassroomDataEmpty() ? 0 : 1;
-  }
+  createState() => new ScheduleSelectorState(_tabIndex, lastSelectorStates[_tabIndex]);
 }
 
 class ScheduleSelectorState extends State<ScheduleSelector> {
@@ -59,6 +59,7 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
     scheduleSelectorState = this;
     //setLastSelectorStates();
   }
+  
 
   @override
   Widget build(BuildContext context) {

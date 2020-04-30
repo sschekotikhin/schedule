@@ -32,10 +32,16 @@ dependencies:
   sliding_up_panel: ^1.0.0
   shared_preferences: ^0.5.6+2
 
+  flutter_launcher_icons: ^0.7.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: 'lib\assets\icons\icon.png'
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
