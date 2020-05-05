@@ -5,25 +5,10 @@ import 'package:schedule/src/resources/courses.dart';
 import 'package:schedule/src/resources/departments.dart';
 import 'package:schedule/src/resources/divisions.dart';
 import 'package:schedule/src/resources/groups.dart';
+import 'package:schedule/src/resources/lessons.dart';
 import 'package:schedule/src/resources/teachers.dart';
 
 import 'package:schedule/src/resources/variables.dart';
-
-// class DivisionsBloc {
-//   final _repository = new DivisionsRepository();
-//   final _divisionsFetcher = new PublishSubject<Divisions>();
-
-//   Observable<Divisions> get divisions => _divisionsFetcher.stream;
-
-//   fetchDivisions() async {
-//     Divisions divisions = await _repository.fetchDivisions();
-//     _divisionsFetcher.sink.add(divisions);
-//   }
-
-//   dispose() {
-//     _divisionsFetcher.close();
-//   }
-// }
 
 class Bloc<T> {
   var _provider;
@@ -62,6 +47,24 @@ class Bloc<T> {
 
       case selectorMode.classroom:
         this._provider = ClassroomsProvider(building);
+        break;
+    }
+  }
+
+  Bloc.fromString(int mode) {
+    //DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday));
+
+    switch (mode){
+      case 0:
+        this._provider = LessonsProviderForTeacher(teacherId, firstDay.millisecondsSinceEpoch);
+        break;
+
+      case 1:
+        this._provider = LessonsProvider(groupId, firstDay.millisecondsSinceEpoch);
+        break;
+
+      case 2:
+        this._provider = LessonsProviderForClassroom(building, classroom, firstDay.millisecondsSinceEpoch);
         break;
     }
   }

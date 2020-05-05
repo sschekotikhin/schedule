@@ -1,9 +1,21 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:schedule/src/resources/functions.dart';
 import 'package:schedule/src/resources/variables.dart';
+import 'package:schedule/src/ui/daysTabBar.dart';
 import 'package:schedule/src/ui/schedule_selector_button.dart';
 
-AppBar ScheduleAppBar() {
-  return new AppBar(
+class ScheduleAppBar extends StatefulWidget implements PreferredSizeWidget {
+  Size get preferredSize => new Size.fromHeight(100.0);
+
+  ScheduleAppBarState createState() => ScheduleAppBarState();
+}
+
+class ScheduleAppBarState extends State<ScheduleAppBar> with SingleTickerProviderStateMixin {
+  @override
+  Widget build(BuildContext context) {
+    return new AppBar(
       title: new Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -15,7 +27,31 @@ AppBar ScheduleAppBar() {
         ]
       ),
       actions: <Widget>[
-        new IconButton(icon: new Icon(Icons.calendar_today), onPressed: () {})
-      ]
+        new IconButton(icon: new Icon(Icons.calendar_today), onPressed: () {
+          showDatePicker(
+            context: context,
+            locale: Locale('ru'), 
+            initialDate: DateTime.now(), 
+            firstDate: DateTime(DateTime.now().year - 1), 
+            lastDate: DateTime(DateTime.now().year + 1)
+          ).then((DateTime day) {
+            daysTabBarState.setState(() {
+              firstDay = day.subtract(new Duration(
+                days: day.weekday - 1,
+                hours: day.hour,
+                minutes: day.minute,
+                seconds: day.second,
+                milliseconds: day.millisecond,
+                microseconds: day.microsecond
+              ));
+              firstDay = firstDay.add(new Duration(hours: 3));
+              tabBarViewState.setState((){});
+              daysTabBarState.tabController.animateTo(day.weekday - 1 - (day.weekday == 7 ? 1 : 0), curve: Curves.ease, duration: Duration(milliseconds: 250));
+            });
+          });        
+        })
+      ],
+      bottom: DaysTabBar()
     );
+  }
 }

@@ -6,14 +6,37 @@ import 'package:schedule/src/resources/functions.dart';
 import 'package:schedule/src/resources/variables.dart';
 import 'package:schedule/src/ui/schedule_selector_button.dart';
 
+bool isTeacherDataEmpty() {
+  if (divisionForTeacherId == -1 || departmentId == -1 || teacherId == -1) return true;
+  else return false;
+}
+
+bool isStudentDataEmpty() {
+  if (divisionForStudentId == -1 || course == -1 || groupId == -1) return true;
+    else return false;
+}
+
+bool isClassroomDataEmpty() {
+  if (building == '' || classroom == '') return true;
+    else return false;
+}
+
+void setLastSelectorStates() {
+  lastSelectorStates[0] = isTeacherDataEmpty() ? 0 : 2;
+  lastSelectorStates[1] = isStudentDataEmpty() ? 0 : 2;
+  lastSelectorStates[2] = isClassroomDataEmpty() ? 0 : 1;
+}
+
 class ScheduleSelector extends StatefulWidget {
   final int _tabIndex;
   final int _stateIndex;
 
-  ScheduleSelector(this._tabIndex, this._stateIndex);
+  ScheduleSelector(this._tabIndex, this._stateIndex) {
+    setLastSelectorStates();
+  }
 
   @override
-  createState() => new ScheduleSelectorState(_tabIndex, _stateIndex);
+  createState() => new ScheduleSelectorState(_tabIndex, lastSelectorStates[_tabIndex]);
 }
 
 class ScheduleSelectorState extends State<ScheduleSelector> {
@@ -34,7 +57,9 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
 
   ScheduleSelectorState(this._tabIndex, this._stateIndex) {
     scheduleSelectorState = this;
+    //setLastSelectorStates();
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -52,35 +77,38 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
       bloc.fetch();
     }
 
-    return new Center(
-      child: new Column(
-        children: <Widget>[
-          new Row(
-            children: <Widget>[
-              new IconButton(icon: Icon(Icons.arrow_back), onPressed: _isBackButtonActive ? prevState : null),
-              new Expanded(
-                child: new Text(getHeaderText(), textAlign: TextAlign.center)
-              ),
-              new IconButton(icon: Icon(Icons.arrow_forward), onPressed: _isForwardButtonActive ? nextState : null)
-            ],
-          ),
-          Expanded(
-            child: _loadData ? new StreamBuilder(
-              stream: bloc.data,
-              builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  return buildList(snapshot);
-                } else if (snapshot.hasError) {
-                  return new Text(snapshot.error.toString());
-                }
+    return new Container(
+      color: Theme.of(context).canvasColor,
+      child: Center(
+        child: new Column(
+          children: <Widget>[
+            new Row(
+              children: <Widget>[
+                new IconButton(icon: Icon(Icons.arrow_back), onPressed: _isBackButtonActive ? prevState : null),
+                new Expanded(
+                  child: new Text(getHeaderText(), textAlign: TextAlign.center)
+                ),
+                new IconButton(icon: Icon(Icons.arrow_forward), onPressed: _isForwardButtonActive ? nextState : null)
+              ],
+            ),
+            Expanded(
+              child: _loadData ? new StreamBuilder(
+                stream: bloc.data,
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    return buildList(snapshot);
+                  } else if (snapshot.hasError) {
+                    return new Text(snapshot.error.toString());
+                  }
 
-                return new Center(
-                  child: CircularProgressIndicator(),
-                );
-              }, 
-            ) : new Center()
-          )
-        ]
+                  return new Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }, 
+              ) : new Center()
+            )
+          ]
+        )
       )
     );
   }
@@ -99,37 +127,48 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
                     switch (_mode) {
                       case selectorMode.divisionForStudent:
                         divisionForStudentId = snapshot.data.items[index].id;
+                        prefs.setInt('div_stud_id', divisionForStudentId);
                         break;
 
                       case selectorMode.course:
                         course = snapshot.data.items[index].course;
+                        prefs.setInt('course', course);
                         break;
 
                       case selectorMode.group:
                         groupId = snapshot.data.items[index].id;
                         header = snapshot.data.items[index].title;
+                        prefs.setInt('group_id', groupId);
+                        updateHeaders(1, header);
                         break;
 
                       case selectorMode.divisionForTeacher:
                         divisionForTeacherId = snapshot.data.items[index].id;
+                        prefs.setInt('div_teach_id', divisionForTeacherId);
                         break;
 
                       case selectorMode.department:
                         departmentId = snapshot.data.items[index].id;
+                        prefs.setInt('department_id', departmentId);
                         break;
                       
                       case selectorMode.teacher:
                         teacherId = snapshot.data.items[index].id;
                         header = snapshot.data.items[index].fullName;
+                        prefs.setInt('teacher_id', teacherId);
+                        updateHeaders(0, header);
                         break;
 
                       case selectorMode.building:
                         building = snapshot.data.items[index].building;
+                        prefs.setString('building', building);
                         break;
 
                       case selectorMode.classroom:
                         classroom = snapshot.data.items[index].number;
                         header = building + ' корпус, ' + classroom;
+                        prefs.setString('classroom', classroom);
+                        updateHeaders(2, header);
                         break;
                     }
 
@@ -228,11 +267,22 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
         });
         
         //loadSchedule
+        tabBarViewState.setState((){});
+        panelController.close();
         return;
       }
 
       _isBackButtonActive = true;
       _mode = scheduleSelectorStates[_tabIndex][++_stateIndex];
     });
+  }
+
+  void updateHeaders(int index, String header) {
+    List<String> headers = prefs.getStringList('headers');
+    if (headers == null) {
+      headers = ['','',''];
+    }
+    headers[index] = header;
+    prefs.setStringList('headers', headers);               
   }
 }

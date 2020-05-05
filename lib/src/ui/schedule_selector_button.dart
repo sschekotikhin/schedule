@@ -12,21 +12,34 @@ class ScheduleSelectorButton extends StatefulWidget {
 
 class ScheduleSelectorButtonState extends State<ScheduleSelectorButton> {
   int _currentTabIndex = 0;
+  String _header;
+  List<String> _headers;
 
   ScheduleSelectorButtonState(this._currentTabIndex) {
     selectorButtonState = this;
+    _header = selectorHeaders[_currentTabIndex];
   }
 
   set tabIndex(int tabIndex) => _currentTabIndex = tabIndex;
 
   @override
   Widget build(BuildContext context) {
-    return new FlatButton(
-      onPressed: () {
-        panelController.isPanelOpen ? panelController.close() : panelController.open();
-      }, 
-      child: new Text(selectorHeaders[_currentTabIndex], textAlign: TextAlign.center), 
-      textColor: Colors.white
-    );
+    if (prefs != null) {
+      _headers = prefs.getStringList('headers');
+      if (_headers != null && _headers[_currentTabIndex].isNotEmpty) {
+        _header = prefs.getStringList('headers')[_currentTabIndex];
+      } else {
+        _header = selectorHeaders[_currentTabIndex];
+      }
+      return new FlatButton(
+        onPressed: () {
+          panelController.isPanelOpen ? panelController.close() : panelController.open();
+        }, 
+        child: new Text(_header, textAlign: TextAlign.center), 
+        textColor: Colors.white
+      );
+    } else {
+      return new Text('Загрузка...');
+    }
   }
 }
