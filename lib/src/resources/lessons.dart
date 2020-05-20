@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:http/http.dart';
 import 'package:schedule/src/models/lesson.dart';
+import 'package:schedule/src/resources/variables.dart';
 
 class Lessons {
   List<Lesson> _items = [];
@@ -22,9 +23,54 @@ class Lessons {
 
 class LessonsProvider {
   int _groupId;
+  int _teacherId;
+
+  String _classroom;
+  String _housing;
+
   int _timestamp;
 
-  LessonsProvider(this._groupId, this._timestamp);
+  requestType _requestType;
+
+  var response;
+
+  LessonsProvider(this._requestType, this._timestamp, {groupId, teacherId, classroom, housing}) {
+    _groupId = groupId;
+    _teacherId = teacherId;
+    _classroom = classroom;
+    _housing = housing;
+  }
+
+  Client client = new Client();
+  
+  Future<Lessons> fetch() async {
+    switch (_requestType) {
+      case requestType.teacher:
+        response = await client.get('http://oreluniver.ru/schedule/$_teacherId////$_timestamp/printschedule');
+        break;
+
+      case requestType.student:
+        response = await client.get('http://oreluniver.ru/schedule//$_groupId///$_timestamp/printschedule');
+        break;
+
+      case requestType.classroom:
+        response = await client.get('http://oreluniver.ru/schedule///$_housing/$_classroom/$_timestamp/printschedule');
+        break;
+    }
+
+    if (response.statusCode == 200) {
+      return new Lessons(json.decode(utf8.decode(response.bodyBytes)));
+    } else {
+      return new Lessons([]);
+    }
+  }
+}
+
+class LessonsProviderForStudents {
+  int _groupId;
+  int _timestamp;
+
+  LessonsProviderForStudents(this._groupId, this._timestamp);
 
   Client client = new Client();
   

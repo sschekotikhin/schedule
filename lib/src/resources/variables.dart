@@ -17,6 +17,18 @@ enum selectorMode {
   classroom
 }
 
+enum requestType {
+  teacher,
+  student,
+  classroom
+}
+
+enum examType {
+  exam,
+  test,
+  other
+}
+
 BorderRadius slidingPanelRadius = new BorderRadius.only(
   bottomLeft: Radius.circular(24.0),
   bottomRight: Radius.circular(24.0)
@@ -41,7 +53,8 @@ ScheduleSelectorButtonState selectorButtonState;
 ScheduleBottomNavBarState bottomNavBarState;
 
 DaysTabBarState daysTabBarState;
-ScheduleTabBarViewState tabBarViewState;
+// ScheduleTabBarViewState tabBarViewState;
+var tabBarViewState;
 
 ThemeData lightTheme = ThemeData(primarySwatch: Colors.blue, brightness: Brightness.light);
 ThemeData darkTheme = ThemeData(primarySwatch: Colors.blue, brightness: Brightness.dark);
