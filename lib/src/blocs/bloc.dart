@@ -7,6 +7,7 @@ import 'package:schedule/src/resources/divisions.dart';
 import 'package:schedule/src/resources/groups.dart';
 import 'package:schedule/src/resources/lessons.dart';
 import 'package:schedule/src/resources/teachers.dart';
+import 'package:schedule/src/resources/exams.dart';
 
 import 'package:schedule/src/resources/variables.dart';
 
@@ -56,15 +57,34 @@ class Bloc<T> {
 
     switch (mode){
       case 0:
-        this._provider = LessonsProviderForTeacher(teacherId, firstDay.millisecondsSinceEpoch);
+        // this._provider = LessonsProviderForTeacher(teacherId, firstDay.millisecondsSinceEpoch);
+        this._provider = LessonsProvider(requestType.teacher, firstDay.millisecondsSinceEpoch, teacherId: teacherId);
         break;
 
       case 1:
-        this._provider = LessonsProvider(groupId, firstDay.millisecondsSinceEpoch);
+        // this._provider = LessonsProviderForStudents(groupId, firstDay.millisecondsSinceEpoch);
+        this._provider = LessonsProvider(requestType.student, firstDay.millisecondsSinceEpoch, groupId: groupId);
         break;
 
       case 2:
-        this._provider = LessonsProviderForClassroom(building, classroom, firstDay.millisecondsSinceEpoch);
+        // this._provider = LessonsProviderForClassroom(building, classroom, firstDay.millisecondsSinceEpoch);
+        this._provider = LessonsProvider(requestType.classroom, firstDay.millisecondsSinceEpoch, housing: building, classroom: classroom);
+        break;
+    }
+  }
+
+  Bloc.exams(int mode) {
+    switch (mode){
+      case 0:
+        this._provider = ExamsProvider(requestType.teacher, id: teacherId);
+        break;
+
+      case 1:
+        this._provider = ExamsProvider(requestType.student, id: groupId);
+        break;
+
+      case 2:
+        this._provider = ExamsProvider(requestType.classroom, classroom: classroom, housing: building);
         break;
     }
   }

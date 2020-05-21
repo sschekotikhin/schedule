@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:schedule/src/app.dart';
 import 'package:schedule/src/ui/settings_page.dart';
+import 'package:schedule/src/ui/exams_schedule/exams_schedule_page.dart';
 
 class ScheduleDrawer extends StatelessWidget {
   @override
@@ -14,11 +15,19 @@ class ScheduleDrawer extends StatelessWidget {
             decoration: BoxDecoration(color: Colors.blue),
           ),
           ListTile(
-            title: Text('Расписание'),
-            leading: Icon(Icons.access_time),
+            title: Text('Расписание занятий'),
+            leading: Icon(Icons.schedule),
             onTap: () {
               //Navigator.pop(context);
               Navigator.push(context, MaterialPageRoute(builder: (context) => App()));
+            }
+          ),
+          ListTile(
+            title: Text('Расписание экзаменов'),
+            leading: Icon(Icons.book),
+            onTap: () {
+              //Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ExamsSchedulePage()));
             }
           ),
           ListTile(
