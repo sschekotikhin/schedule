@@ -176,7 +176,7 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
                   }, 
                   child: new Text(getButtonText(snapshot.data.items[index]), textAlign: TextAlign.center,),
                 ),
-                if (snapshot.data.items.length - 1 != index) new Divider(),
+                (snapshot.data.items.length - 1 != index) ? new Divider() : Container(),
               ],
             ),
           ),

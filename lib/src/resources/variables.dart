@@ -53,6 +53,9 @@ ScheduleSelectorButtonState selectorButtonState;
 ScheduleBottomNavBarState bottomNavBarState;
 
 DaysTabBarState daysTabBarState;
+
+TabController tabController;
+
 // ScheduleTabBarViewState tabBarViewState;
 var tabBarViewState;
 
@@ -84,6 +87,8 @@ int divisionForStudentId = -1, course = -1, groupId = -1, //load
     divisionForTeacherId = -1, departmentId = -1, teacherId = -1; //load
 
 String building = '', classroom = ''; //load
+
+// String nextDayTime = '21:00';
 
 List<String> daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 

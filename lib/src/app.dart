@@ -24,36 +24,37 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,
-      home: Scaffold(
-        appBar: ScheduleAppBar(),
-        drawer: ScheduleDrawer(),
-        bottomNavigationBar: ScheduleBottomNavBar(scheduleMode),
-        body: FutureBuilder(
-          future: setPreferences(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              return new SlidingUpPanel(
+      home: FutureBuilder (
+        future: setPreferences(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            DaysTabControllerState();
+            return Scaffold(
+              appBar: ScheduleAppBar(),
+              drawer: ScheduleDrawer(),
+              bottomNavigationBar: ScheduleBottomNavBar(scheduleMode),
+              body: SlidingUpPanel(
                 controller: panelController,
                 panel: new ScheduleSelector(scheduleMode, lastSelectorStates[scheduleMode]),
-                body: ScheduleTabBarView(daysTabBarState.tabController),
+                body: ScheduleTabBarView(tabController),
                 slideDirection: SlideDirection.DOWN,
                 borderRadius: slidingPanelRadius,
                 minHeight: 0,
                 backdropEnabled: true,
                 onPanelOpened: () {scheduleSelectorState.loadData = true; scheduleSelectorState.setState((){});},
                 onPanelClosed: () {scheduleSelectorState.loadData = false;},
-              );
-            } 
-            else if (snapshot.hasError) {
-              return new Text(snapshot.error.toString());
-            }
-
-            return new Center(
-              child: CircularProgressIndicator(),
+              )
             );
+          } 
+          else if (snapshot.hasError) {
+            return new Text(snapshot.error.toString());
           }
-        )
-      ),
+
+          return new Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      )
     );
   } 
 
@@ -71,11 +72,13 @@ class App extends StatelessWidget {
     scheduleMode = prefs.getInt('schedule_mode') ?? 1;
     // ScheduleSelector.setLastSelectorStates();
     // log('set sel');
-    bottomNavBarState.setState((){});
+    
     //selectorButtonState.setState((){});
-    selectorButtonState.setState(() {
-      selectorButtonState.tabIndex = scheduleMode;
-    });
+    
+    // bottomNavBarState.setState((){});
+    // selectorButtonState.setState(() {
+    //   selectorButtonState.tabIndex = scheduleMode;
+    // });
 
     return 0;
   }
