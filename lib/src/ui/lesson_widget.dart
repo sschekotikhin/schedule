@@ -73,7 +73,7 @@ class LessonWidget extends StatelessWidget {
       );
     }
     else {
-      bool hideEmpty = prefs.getBool('setting_hideEmpty') ?? false;
+      bool hideEmpty = prefs.getBool('setting_hide_empty') ?? false;
       if (!hideEmpty) {
         return new Card (
           elevation: 0.0,
