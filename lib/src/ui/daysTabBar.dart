@@ -21,6 +21,7 @@ class DaysTabControllerState extends State with SingleTickerProviderStateMixin {
       );
       if (now.hour >= nextTime.hour && now.minute >= nextTime.minute) {
         day++;
+        if (day > 7) day = 7;
       }
     }
     tabController.animateTo(day == 7 ? 0 : day - 1);
