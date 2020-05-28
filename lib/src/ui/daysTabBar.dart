@@ -50,7 +50,9 @@ class DaysTabBar extends StatefulWidget with PreferredSizeWidget{
 class DaysTabBarState extends State<DaysTabBar> with SingleTickerProviderStateMixin  {
   TabController _daysTabController;
 
-  DaysTabBarState(this._daysTabController);
+  DaysTabBarState(this._daysTabController) {
+    daysTabBarState = this;
+  }
   
   @override
   Widget build(BuildContext context) { 
