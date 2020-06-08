@@ -1,10 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:schedule/src/blocs/bloc.dart';
-import 'package:schedule/src/resources/functions.dart';
 import 'package:schedule/src/resources/variables.dart';
-import 'package:schedule/src/ui/schedule_selector_button.dart';
 
 bool isTeacherDataEmpty() {
   if (divisionForTeacherId == -1 || departmentId == -1 || teacherId == -1) return true;

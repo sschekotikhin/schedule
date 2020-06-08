@@ -62,14 +62,7 @@ var tabBarViewState;
 ThemeData lightTheme = ThemeData(primarySwatch: Colors.blue, brightness: Brightness.light);
 ThemeData darkTheme = ThemeData(primarySwatch: Colors.blue, brightness: Brightness.dark);
 
-DateTime firstDay = DateTime.now().subtract(new Duration(
-  days: DateTime.now().weekday == 7 ? -1 : DateTime.now().weekday - 1,
-  hours: DateTime.now().hour - 3,
-  minutes: DateTime.now().minute,
-  seconds: DateTime.now().second,
-  milliseconds: DateTime.now().millisecond,
-  microseconds: DateTime.now().microsecond
-));
+DateTime firstDay;
 
 int scheduleMode = 1; //load
 

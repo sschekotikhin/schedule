@@ -8,7 +8,6 @@ import 'package:schedule/src/ui/exams_schedule/exams_appbar.dart';
 import 'package:schedule/src/ui/exams_schedule/exams_tab_view.dart';
 
 import 'package:schedule/src/ui/drawer.dart';
-import 'package:schedule/src/ui/schedule_bottom_navbar.dart';
 import 'package:schedule/src/ui/exams_schedule/exams_bottom_bar.dart';
 
 class ExamsSchedulePage extends StatelessWidget {
@@ -23,19 +22,21 @@ class ExamsSchedulePage extends StatelessWidget {
       home: DefaultTabController(
         length: 3,
         child: Scaffold(
-          appBar: ExamsAppBar(),
-          drawer: ScheduleDrawer(),
-          bottomNavigationBar: ExamsBottomNavBar(scheduleMode),
           body: SlidingUpPanel(
             controller: panelController,
             panel: new ScheduleSelector(scheduleMode, lastSelectorStates[scheduleMode]),
-            body: ExamsTabBarView(),
             slideDirection: SlideDirection.DOWN,
             borderRadius: slidingPanelRadius,
             minHeight: 0,
             backdropEnabled: true,
             onPanelOpened: () {scheduleSelectorState.loadData = true; scheduleSelectorState.setState((){});},
             onPanelClosed: () {scheduleSelectorState.loadData = false;},
+            body: Scaffold(
+              body: ExamsTabBarView(),
+              appBar: ExamsAppBar(),
+              drawer: ScheduleDrawer(),
+              bottomNavigationBar: ExamsBottomNavBar(scheduleMode),
+            )
           )
         )
       )

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule/src/blocs/bloc.dart';
@@ -12,6 +10,16 @@ class DaysTabControllerState extends State with SingleTickerProviderStateMixin {
     tabController = new TabController(length: 6, vsync: this);
 
     DateTime now = DateTime.now();
+
+    firstDay = now.subtract(new Duration(
+      days: now.weekday == 7 ? -1 : DateTime.now().weekday - 1,
+      hours: now.hour - 3,
+      minutes: now.minute,
+      seconds: now.second,
+      milliseconds: now.millisecond,
+      microseconds: now.microsecond
+    ));
+
     int day = now.weekday;
     if (prefs != null && (prefs.getBool('setting_show_next_day') ?? false)) {
       String nextDayTime = prefs.getString('setting_next_day_time');
@@ -21,12 +29,13 @@ class DaysTabControllerState extends State with SingleTickerProviderStateMixin {
       );
       if (now.hour >= nextTime.hour && now.minute >= nextTime.minute) {
         day++;
+        if (now.weekday == 6) {
+          firstDay = firstDay.add(new Duration(days: 7));
+        }
         if (day > 7) day = 7;
       }
     }
     tabController.animateTo(day == 7 ? 0 : day - 1);
-
-    // tabController.animateTo(DateTime.now().weekday == 7 ? 0 : DateTime.now().weekday - 1);
   }
 
   @override
