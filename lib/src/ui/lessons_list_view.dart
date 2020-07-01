@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule/src/models/lesson.dart';
-import 'package:schedule/src/resources/variables.dart';
-import 'package:schedule/src/blocs/bloc.dart';
 import 'package:schedule/src/ui/lesson_widget.dart';
 
 class LessonsListView extends StatelessWidget {
@@ -19,18 +17,14 @@ class LessonsListView extends StatelessWidget {
       List<Lesson> lessons = Lesson.lessonsByDay(_day, _snapshot.data.items);
 
       if (lessons.isNotEmpty) {
-        return new Padding(
-          padding: EdgeInsets.only(left: 0.0, right: 0.0, top: 0.0, bottom: 190),
-          //padding: EdgeInsets.all(0),
-          child: ListView.builder(
-            itemCount: 8,
-            itemBuilder: (BuildContext context, int index) {
-              return new Column(
-                children: [
-                  LessonWidget(index, Lesson.lessonsByNumber(index + 1, lessons))
-                ]);     
-            }
-          )
+        return ListView.builder(
+          itemCount: 8,
+          itemBuilder: (BuildContext context, int index) {
+            return new Column(
+              children: [
+                LessonWidget(index, Lesson.lessonsByNumber(index + 1, lessons))
+              ]);     
+          }
         );
       } else {
         return new Center(

@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:schedule/src/resources/functions.dart';
 import 'package:schedule/src/resources/variables.dart';
 import 'package:schedule/src/ui/daysTabBar.dart';
 import 'package:schedule/src/ui/schedule_selector_button.dart';
@@ -47,6 +44,7 @@ class ScheduleAppBarState extends State<ScheduleAppBar> with SingleTickerProvide
               ));
               firstDay = firstDay.add(new Duration(hours: 3));
               tabBarViewState.setState((){});
+              bottomNavBarState.setState(() { });
               // daysTabBarState.tabController.animateTo(day.weekday - 1 - (day.weekday == 7 ? 1 : 0), curve: Curves.ease, duration: Duration(milliseconds: 250));
               tabController.animateTo(day.weekday - 1 - (day.weekday == 7 ? 1 : 0), curve: Curves.ease, duration: Duration(milliseconds: 250));
             });

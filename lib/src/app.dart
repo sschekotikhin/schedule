@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:schedule/src/resources/functions.dart';
 import 'package:schedule/src/resources/variables.dart';
 import 'package:schedule/src/ui/daysTabBar.dart';
 import 'package:schedule/src/ui/schedule_selector.dart';
@@ -30,19 +27,21 @@ class App extends StatelessWidget {
           if (snapshot.hasData) {
             DaysTabControllerState();
             return Scaffold(
-              appBar: ScheduleAppBar(),
-              drawer: ScheduleDrawer(),
-              bottomNavigationBar: ScheduleBottomNavBar(scheduleMode),
               body: SlidingUpPanel(
                 controller: panelController,
                 panel: new ScheduleSelector(scheduleMode, lastSelectorStates[scheduleMode]),
-                body: ScheduleTabBarView(tabController),
                 slideDirection: SlideDirection.DOWN,
                 borderRadius: slidingPanelRadius,
                 minHeight: 0,
                 backdropEnabled: true,
                 onPanelOpened: () {scheduleSelectorState.loadData = true; scheduleSelectorState.setState((){});},
                 onPanelClosed: () {scheduleSelectorState.loadData = false;},
+                body: Scaffold(
+                  body: ScheduleTabBarView(tabController),
+                  appBar: ScheduleAppBar(),
+                  drawer: ScheduleDrawer(),
+                  bottomNavigationBar: ScheduleBottomNavBar(scheduleMode),
+                )
               )
             );
           } 

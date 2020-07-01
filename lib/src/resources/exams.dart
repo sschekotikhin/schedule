@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:http/http.dart';
 import 'package:schedule/src/models/exam.dart';
 import 'package:schedule/src/resources/variables.dart';

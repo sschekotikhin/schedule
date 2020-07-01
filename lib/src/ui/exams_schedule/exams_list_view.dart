@@ -16,18 +16,14 @@ class ExamsListView extends StatelessWidget {
       List<Exam> exams = Exam.examsByType(_type, _snapshot.data.items);
 
       if (exams.isNotEmpty) {
-        return new Padding(
-          padding: EdgeInsets.only(left: 0.0, right: 0.0, top: 0.0, bottom: 190),
-          //padding: EdgeInsets.all(0),
-          child: ListView.builder(
-            itemCount: exams.length,
-            itemBuilder: (BuildContext context, int index) {
-              return new Column(
-                children: [
-                  ExamWidget(exams[index])
-                ]);     
-            }
-          )
+        return ListView.builder(
+          itemCount: exams.length,
+          itemBuilder: (BuildContext context, int index) {
+            return new Column(
+              children: [
+                ExamWidget(exams[index])
+              ]);     
+          }
         );
       } else {
         return new Center(

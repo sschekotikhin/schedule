@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schedule/src/resources/functions.dart';
 import 'package:schedule/src/resources/variables.dart';
-import 'package:schedule/src/ui/schedule_selector.dart';
 
 class ScheduleBottomNavBar extends StatefulWidget {
   final int _tabIndex;

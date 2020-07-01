@@ -1,5 +1,3 @@
-import 'package:schedule/src/resources/variables.dart';
-
 // bool isTeacherDataEmpty() {
 //   if (divisionForTeacherId == -1 || departmentId == -1 || teacherId == -1) return true;
 //   else return false;

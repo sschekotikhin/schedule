@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:schedule/src/ui/drawer.dart';
 
 import 'package:schedule/src/resources/variables.dart';
 
