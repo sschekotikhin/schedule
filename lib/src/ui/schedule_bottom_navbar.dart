@@ -27,7 +27,7 @@ class ScheduleBottomNavBarState extends State<ScheduleBottomNavBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconButton(icon: Icon(Icons.arrow_back, color: Theme.of(context).primaryIconTheme.color), onPressed: (){
+          IconButton(icon: Icon(Icons.arrow_back, color: Theme.of(context).primaryIconTheme.color), tooltip: 'Назад', onPressed: (){
             daysTabBarState.setState(() {
               firstDay = firstDay.subtract(new Duration(days: 7));
               //daysTabBarState.tabController.animateTo(0);
@@ -36,7 +36,7 @@ class ScheduleBottomNavBarState extends State<ScheduleBottomNavBar> {
             tabBarViewState.setState((){});
           }),
           Text(_weekDays, style: TextStyle(color: Theme.of(context).primaryIconTheme.color)),
-          IconButton(icon: Icon(Icons.arrow_forward, color: Theme.of(context).primaryIconTheme.color), onPressed: (){
+          IconButton(icon: Icon(Icons.arrow_forward, color: Theme.of(context).primaryIconTheme.color), tooltip: 'Вперед', onPressed: (){
             daysTabBarState.setState(() {
               firstDay = firstDay.add(new Duration(days: 7));
             });

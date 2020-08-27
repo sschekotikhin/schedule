@@ -37,13 +37,15 @@ class ExamsAppBarState extends State<ExamsAppBar> {
       actions: <Widget>[
         // new IconButton(icon: new Icon(null), onPressed: null),
         IconButton(
-          icon: Icon(Icons.refresh), 
+          icon: Icon(Icons.refresh),
+          tooltip: 'Обновить', 
           onPressed: (){
             tabBarViewState.setState(() {});
           }
         ),
         PopupMenuButton<int>(
           icon: Icon(modeIcons[scheduleMode]),
+          tooltip: 'Выбрать режим',
           itemBuilder: (BuildContext context) => [
             PopupMenuItem(
               child: buildModeSelectorItem(0),

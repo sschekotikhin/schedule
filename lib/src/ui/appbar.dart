@@ -37,13 +37,15 @@ class ScheduleAppBarState extends State<ScheduleAppBar> with SingleTickerProvide
       ),
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.refresh), 
+          icon: Icon(Icons.refresh),
+          tooltip: 'Обновить', 
           onPressed: (){
             tabBarViewState.setState(() {});
           }
         ),
         new IconButton(
-          icon: new Icon(Icons.calendar_today), 
+          icon: new Icon(Icons.calendar_today),
+          tooltip: 'Выбрать дату',
           onPressed: () {
             showDatePicker(
               context: context,
@@ -73,6 +75,7 @@ class ScheduleAppBarState extends State<ScheduleAppBar> with SingleTickerProvide
         
         PopupMenuButton<int>(
           icon: Icon(modeIcons[scheduleMode]),
+          tooltip: 'Выбрать режим',
           itemBuilder: (BuildContext context) => [
             PopupMenuItem(
               child: buildModeSelectorItem(0),
