@@ -52,7 +52,7 @@ class Bloc<T> {
     }
   }
 
-  Bloc.fromString(int mode) {
+  Bloc.lessons(int mode) {
     //DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday));
 
     switch (mode){

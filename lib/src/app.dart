@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:schedule/src/resources/variables.dart';
 import 'package:schedule/src/ui/daysTabBar.dart';
-import 'package:schedule/src/ui/schedule_selector.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-
-import 'package:schedule/src/ui/appbar.dart';
-import 'package:schedule/src/ui/drawer.dart';
-import 'package:schedule/src/ui/schedule_bottom_navbar.dart';
+import 'package:schedule/src/ui/lessons_schedule_page.dart';
 
 class App extends StatelessWidget {
   @override
@@ -23,34 +18,28 @@ class App extends StatelessWidget {
       darkTheme: darkTheme,
       home: FutureBuilder (
         future: setPreferences(),
+        // future: Future<bool>.delayed(
+        //   Duration(seconds: 3),
+        //   () => true
+        // ),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             DaysTabControllerState();
-            return Scaffold(
-              body: SlidingUpPanel(
-                controller: panelController,
-                panel: new ScheduleSelector(scheduleMode, lastSelectorStates[scheduleMode]),
-                slideDirection: SlideDirection.DOWN,
-                borderRadius: slidingPanelRadius,
-                minHeight: 0,
-                backdropEnabled: true,
-                onPanelOpened: () {scheduleSelectorState.loadData = true; scheduleSelectorState.setState((){});},
-                onPanelClosed: () {scheduleSelectorState.loadData = false;},
-                body: Scaffold(
-                  body: ScheduleTabBarView(tabController),
-                  appBar: ScheduleAppBar(),
-                  drawer: ScheduleDrawer(),
-                  bottomNavigationBar: ScheduleBottomNavBar(scheduleMode),
-                )
-              )
-            );
+            return LessonsSchedulePage();
           } 
           else if (snapshot.hasError) {
             return new Text(snapshot.error.toString());
           }
 
-          return new Center(
-            child: CircularProgressIndicator(),
+          return new Scaffold(
+            body: Center(
+              // child: Column(
+              //   children: [
+              //     Expanded(child: Image.asset('assets/images/logo_transparent.png'))
+              //   ]
+              // ),
+              child: CircularProgressIndicator(),
+            ),
           );
         }
       )
@@ -58,6 +47,10 @@ class App extends StatelessWidget {
   } 
 
   Future setPreferences() async {
+    // await Future<bool>.delayed(
+    //       Duration(seconds: 1),
+    //       () => true
+    //     );
     prefs = await SharedPreferences.getInstance();
 
     divisionForStudentId = prefs.getInt('div_stud_id') ?? -1;

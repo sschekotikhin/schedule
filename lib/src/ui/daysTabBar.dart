@@ -95,7 +95,7 @@ class ScheduleTabBarViewState extends State<ScheduleTabBarView> {
 
   @override
   Widget build(BuildContext context) {
-    Bloc bloc = new Bloc.fromString(scheduleMode);
+    Bloc bloc = new Bloc.lessons(scheduleMode);
     bloc.fetch();
 
     return new StreamBuilder(

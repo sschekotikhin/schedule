@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:schedule/src/models/lesson.dart';
 import 'package:schedule/src/resources/variables.dart';
@@ -42,19 +43,23 @@ class LessonsProvider {
 
   Client client = new Client();
   
-  Future<Lessons> fetch() async {
-    switch (_requestType) {
-      case requestType.teacher:
-        response = await client.get('http://oreluniver.ru/schedule/$_teacherId////$_timestamp/printschedule');
-        break;
+  fetch() async {
+    try{
+      switch (_requestType) {
+        case requestType.teacher:
+          response = await client.get('http://oreluniver.ru/schedule/$_teacherId////$_timestamp/printschedule');
+          break;
 
-      case requestType.student:
-        response = await client.get('http://oreluniver.ru/schedule//$_groupId///$_timestamp/printschedule');
-        break;
+        case requestType.student:
+          response = await client.get('http://oreluniver.ru/schedule//$_groupId///$_timestamp/printschedule');
+          break;
 
-      case requestType.classroom:
-        response = await client.get('http://oreluniver.ru/schedule///$_housing/$_classroom/$_timestamp/printschedule');
-        break;
+        case requestType.classroom:
+          response = await client.get('http://oreluniver.ru/schedule///$_housing/$_classroom/$_timestamp/printschedule');
+          break;
+      }
+    } catch(e) {
+      return 'Error';
     }
 
     if (response.statusCode == 200) {

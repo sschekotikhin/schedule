@@ -12,6 +12,15 @@ class ExamsAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class ExamsAppBarState extends State<ExamsAppBar> {
+  Widget buildModeSelectorItem(int value) => Row(
+    mainAxisSize: MainAxisSize.max,
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      Icon(modeIcons[value], color: Theme.of(context).iconTheme.color),
+      Padding(padding: EdgeInsets.only(left: 10) , child: Text(modeLabels[value]))
+    ]
+  );
+
   @override
   Widget build(BuildContext context) {
     return new AppBar(
@@ -26,7 +35,48 @@ class ExamsAppBarState extends State<ExamsAppBar> {
         ]
       ),
       actions: <Widget>[
-        new IconButton(icon: new Icon(null), onPressed: null)
+        // new IconButton(icon: new Icon(null), onPressed: null),
+        IconButton(
+          icon: Icon(Icons.refresh), 
+          onPressed: (){
+            tabBarViewState.setState(() {});
+          }
+        ),
+        PopupMenuButton<int>(
+          icon: Icon(modeIcons[scheduleMode]),
+          itemBuilder: (BuildContext context) => [
+            PopupMenuItem(
+              child: buildModeSelectorItem(0),
+              value: 0,
+            ),
+            PopupMenuItem(
+              child: buildModeSelectorItem(1),
+              value: 1,
+            ),
+            PopupMenuItem(
+              child: buildModeSelectorItem(2),
+              value: 2,
+            )
+          ],
+          onSelected: (value) {
+            setState(() {
+              scheduleMode = value;
+
+              tabBarViewState.setState(() {});
+
+              scheduleSelectorState.setState(() {
+                scheduleSelectorState.tabIndex = value;
+                scheduleSelectorState.stateIndex = lastSelectorStates[value];
+              });
+
+              selectorButtonState.setState(() {
+                selectorButtonState.tabIndex = value;
+              });
+
+              prefs.setInt('schedule_mode', value);
+            });
+          },
+        ),
       ],
       bottom: ExamsTabBar()
     );
