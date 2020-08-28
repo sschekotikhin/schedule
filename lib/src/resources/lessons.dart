@@ -10,7 +10,7 @@ class Lessons {
 
   Lessons(List<dynamic> items) {
     items.forEach((json) {
-      _items.add(new Lesson(json['id'], json['NumberSubGruop'], json['TitleSubject'],
+      _items.add(new Lesson(json['id_cell'], json['NumberSubGruop'], json['TitleSubject'],
                             json['TypeLesson'], json['NumberLesson'], json['DayWeek'],
                             json['Korpus'], json['NumberRoom'], json['special'],
                             json['title'], json['employee_id'], json['Family'],
@@ -63,7 +63,14 @@ class LessonsProvider {
     }
 
     if (response.statusCode == 200) {
-      return new Lessons(json.decode(utf8.decode(response.bodyBytes)));
+      var map = json.decode(utf8.decode(response.bodyBytes));
+      if (map.isEmpty) return Lessons([]);
+
+      List<dynamic> list = List();
+      map.forEach((key, value) { print(value); list.add(value); });
+      list.removeLast();
+
+      return new Lessons(list);
     } else {
       return new Lessons([]);
     }

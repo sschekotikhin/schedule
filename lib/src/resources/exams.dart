@@ -56,6 +56,15 @@ class ExamsProvider {
     }
 
     if (response.statusCode == 200) {
+      //Если переделали расписание экзаменов
+      // var map = json.decode(utf8.decode(response.bodyBytes));
+      // if (map.isEmpty) return Exams([]);
+
+      // List<dynamic> list = List();
+      // map.forEach((key, value) { print(value); list.add(value); });
+      // list.removeLast();
+
+      // return new Exams(list);
       return new Exams(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       return new Exams([]);
