@@ -67,7 +67,7 @@ class LessonsProvider {
       if (map.isEmpty) return Lessons([]);
 
       List<dynamic> list = List();
-      map.forEach((key, value) { print(value); list.add(value); });
+      map.forEach((key, value) { list.add(value); });
       list.removeLast();
 
       return new Lessons(list);
