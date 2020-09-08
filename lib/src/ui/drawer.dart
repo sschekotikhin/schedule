@@ -24,21 +24,26 @@ class ScheduleDrawer extends StatelessWidget {
             child: Column (
               // padding: EdgeInsets.zero,
               children: <Widget>[
-                DrawerHeader(
-                  padding: EdgeInsets.all(16),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(child: Image.asset('assets/images/logo_transparent_no_paddings_2.png')),
-                        Padding(
-                          padding: EdgeInsets.only(top: 16),
-                          child: Text('Расписание ОГУ')
-                        )
-                      ]
-                    
-                  ),
-                  // decoration: BoxDecoration(),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(child: DrawerHeader(
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(child: Image.asset('assets/images/logo_transparent_no_paddings_2.png')),
+                          Padding(
+                            padding: EdgeInsets.only(top: 16),
+                            child: Text('Расписание ОГУ')
+                          )
+                        ]
+                      ),
+                    )),
+                  ]
                 ),
                 ListTile(
                   title: Text('Расписание занятий'),
@@ -67,22 +72,11 @@ class ScheduleDrawer extends StatelessWidget {
               ]
             )
           ),
-          // Divider(height: 1,),
-          // Padding(
-          //   padding: EdgeInsets.all(16),
-          //   child: Text('data'),
-          // ),
           Container(
-            // padding: EdgeInsets.only(bottom: 16),
             child: Column(
               // crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Divider(),
-                // Text(
-                //   'Информация о расписании получена с сайта ОГУ им И.С. Тургенева',
-                //   textAlign: TextAlign.center,
-                //   style: TextStyle(fontSize: 12),
-                // ),
                 Padding(
                   padding: EdgeInsets.only(bottom: 10),
                   child: InkWell(
