@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:schedule/src/models/lesson.dart';
 import 'package:schedule/src/resources/variables.dart';
+import 'teacher_page.dart';
 
 class LessonWidget extends StatelessWidget {
   final int _number;
@@ -34,7 +35,24 @@ class LessonWidget extends StatelessWidget {
     );
   }
 
-  buildLessonInfoWidget(String subjectTitle, String lessonType, String leftText, String rightText) {
+  getChildrenWidgetList(BuildContext context, String fullnames, List<int> idList) {
+    List<Widget> children = [];
+    fullnames.split(', ').asMap().forEach((key, value) {
+      children.addAll([
+        InkWell(
+          child: Text(value),
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => TeacherPage(idList[key], value)));
+          },
+        ),
+        Text(',')
+      ]);
+    });
+    children.removeLast();
+    return children;
+  }
+
+  buildLessonInfoWidget(BuildContext context,  String subjectTitle, String lessonType, String leftText, String rightText, {List<int> idList}) {
     return Column(
       mainAxisSize: MainAxisSize.max,
       // mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -48,7 +66,15 @@ class LessonWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             new Expanded(child: Padding(padding: EdgeInsets.only(top: 2.5, bottom: 2.5), child: Text(leftText, textAlign: TextAlign.left))),
-            new Expanded(child: Padding(padding: EdgeInsets.only(top: 2.5, bottom: 2.5, left: 10.0), child: Text(rightText, textAlign: TextAlign.right)))
+            (scheduleMode == 0) ?
+            new Expanded(child: Padding(padding: EdgeInsets.only(top: 2.5, bottom: 2.5, left: 10.0), child: Text(rightText, textAlign: TextAlign.right))) :
+            new Expanded(child: Padding(padding: EdgeInsets.only(top: 2.5, bottom: 2.5, left: 10.0), 
+                child: Wrap(
+                  alignment: WrapAlignment.end,
+                  children: getChildrenWidgetList(context, rightText, idList)
+                ),
+              )
+            )
           ]
         ),
       ]
@@ -64,6 +90,7 @@ class LessonWidget extends StatelessWidget {
         _roomNumber = _lessons[0].roomNumber;
         _fullName = _lessons[0].fullName;
         _title = _lessons[0].title;
+        List<int> _list = [_lessons[0].employyeId];
 
       String roomText = '$_housing-$_roomNumber';
 
@@ -76,7 +103,7 @@ class LessonWidget extends StatelessWidget {
 
             children.addAll(
               [
-                buildLessonInfoWidget(lesson.subjectTitle, lesson.lessonType, leftText, rightText),
+                buildLessonInfoWidget(context, lesson.subjectTitle, lesson.lessonType, leftText, rightText, idList: [lesson.employyeId]),
                 Divider(color: Colors.blueGrey, thickness: 1.0, height: 10.0)
               ]
             );
@@ -93,6 +120,7 @@ class LessonWidget extends StatelessWidget {
         _lessons.forEach((lesson) {
           if (lesson.fullName != _lessons[0].fullName) {
             _fullName += ', ' + lesson.fullName;
+            _list.add(lesson.employyeId);
           }
           if (lesson.title != _lessons[0].title) {
             _title += ', ' + lesson.title;
@@ -113,7 +141,7 @@ class LessonWidget extends StatelessWidget {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            buildLessonInfoWidget(_subjectTitle, _lessonType, leftText, rightText),
+            buildLessonInfoWidget(context, _subjectTitle, _lessonType, leftText, rightText, idList: _list),
             new Divider(color: Colors.blueGrey, thickness: 1.0, height: 10.0),
             buildLessonTimeRow()
           ],
