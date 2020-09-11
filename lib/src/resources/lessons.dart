@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:schedule/src/models/lesson.dart';
 import 'package:schedule/src/resources/variables.dart';
@@ -9,7 +10,7 @@ class Lessons {
 
   Lessons(List<dynamic> items) {
     items.forEach((json) {
-      _items.add(new Lesson(json['id'], json['NumberSubGruop'], json['TitleSubject'],
+      _items.add(new Lesson(json['id_cell'], json['NumberSubGruop'], json['TitleSubject'],
                             json['TypeLesson'], json['NumberLesson'], json['DayWeek'],
                             json['Korpus'], json['NumberRoom'], json['special'],
                             json['title'], json['employee_id'], json['Family'],
@@ -42,23 +43,34 @@ class LessonsProvider {
 
   Client client = new Client();
   
-  Future<Lessons> fetch() async {
-    switch (_requestType) {
-      case requestType.teacher:
-        response = await client.get('http://oreluniver.ru/schedule/$_teacherId////$_timestamp/printschedule');
-        break;
+  fetch() async {
+    try{
+      switch (_requestType) {
+        case requestType.teacher:
+          response = await client.get('http://oreluniver.ru/schedule/$_teacherId////$_timestamp/printschedule');
+          break;
 
-      case requestType.student:
-        response = await client.get('http://oreluniver.ru/schedule//$_groupId///$_timestamp/printschedule');
-        break;
+        case requestType.student:
+          response = await client.get('http://oreluniver.ru/schedule//$_groupId///$_timestamp/printschedule');
+          break;
 
-      case requestType.classroom:
-        response = await client.get('http://oreluniver.ru/schedule///$_housing/$_classroom/$_timestamp/printschedule');
-        break;
+        case requestType.classroom:
+          response = await client.get('http://oreluniver.ru/schedule///$_housing/$_classroom/$_timestamp/printschedule');
+          break;
+      }
+    } catch(e) {
+      return 'Error';
     }
 
     if (response.statusCode == 200) {
-      return new Lessons(json.decode(utf8.decode(response.bodyBytes)));
+      var map = json.decode(utf8.decode(response.bodyBytes));
+      if (map.isEmpty) return Lessons([]);
+
+      List<dynamic> list = List();
+      map.forEach((key, value) { list.add(value); });
+      list.removeLast();
+
+      return new Lessons(list);
     } else {
       return new Lessons([]);
     }

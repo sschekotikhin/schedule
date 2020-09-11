@@ -36,7 +36,7 @@ class ScheduleSelectorButtonState extends State<ScheduleSelectorButton> {
           panelController.isPanelOpen ? panelController.close() : panelController.open();
         }, 
         child: new Text(_header, textAlign: TextAlign.center), 
-        textColor: Colors.white
+        textColor: Theme.of(context).primaryTextTheme.button.color
       );
     } else {
       return new Text('Загрузка...');

@@ -153,7 +153,9 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
                       
                       case selectorMode.teacher:
                         teacherId = snapshot.data.items[index].id;
-                        header = snapshot.data.items[index].fullName;
+                        List<String> teacherNames = snapshot.data.items[index].fullName.toString().split(' ');
+                        header = '${teacherNames[0]} ${teacherNames[1][0]}.${teacherNames[2][0]}.';
+                        // header = snapshot.data.items[index].fullName;
                         prefs.setInt('teacher_id', teacherId);
                         updateHeaders(0, header);
                         break;
@@ -165,7 +167,8 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
 
                       case selectorMode.classroom:
                         classroom = snapshot.data.items[index].number;
-                        header = building + ' корпус, ' + classroom;
+                        // header = building + ' корпус, ' + classroom;
+                        header = '$building - $classroom';
                         prefs.setString('classroom', classroom);
                         updateHeaders(2, header);
                         break;

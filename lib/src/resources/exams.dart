@@ -36,22 +36,35 @@ class ExamsProvider {
 
   Client client = new Client();
   
-  Future<Exams> fetch() async {
-    switch (_requestType) {
-      case requestType.teacher:
-        response = await client.get('http://oreluniver.ru/schedule//$_id///printexamschedule');
-        break;
+  fetch() async {
+    try {
+      switch (_requestType) {
+        case requestType.teacher:
+          response = await client.get('http://oreluniver.ru/schedule//$_id///printexamschedule');
+          break;
 
-      case requestType.student:
-        response = await client.get('http://oreluniver.ru/schedule/$_id////printexamschedule');
-        break;
+        case requestType.student:
+          response = await client.get('http://oreluniver.ru/schedule/$_id////printexamschedule');
+          break;
 
-      case requestType.classroom:
-        response = await client.get('http://oreluniver.ru/schedule///$_housing/$_classroom/printexamschedule');
-        break;
+        case requestType.classroom:
+          response = await client.get('http://oreluniver.ru/schedule///$_housing/$_classroom/printexamschedule');
+          break;
+      }
+    } catch(e) {
+      return 'Error';
     }
 
     if (response.statusCode == 200) {
+      //Если переделали расписание экзаменов
+      // var map = json.decode(utf8.decode(response.bodyBytes));
+      // if (map.isEmpty) return Exams([]);
+
+      // List<dynamic> list = List();
+      // map.forEach((key, value) { print(value); list.add(value); });
+      // list.removeLast();
+
+      // return new Exams(list);
       return new Exams(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       return new Exams([]);

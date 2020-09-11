@@ -5,6 +5,8 @@ import 'package:schedule/src/ui/schedule_selector.dart';
 import 'package:schedule/src/ui/schedule_selector_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'colors.dart';
+
 
 enum selectorMode {
   divisionForStudent,
@@ -59,8 +61,9 @@ TabController tabController;
 // ScheduleTabBarViewState tabBarViewState;
 var tabBarViewState;
 
-ThemeData lightTheme = ThemeData(primarySwatch: Colors.blue, brightness: Brightness.light);
-ThemeData darkTheme = ThemeData(primarySwatch: Colors.blue, brightness: Brightness.dark);
+MaterialColor primaryColor = MaterialColorGenerator.generateMaterialColor(Color.fromARGB(255, 31, 75, 153));
+ThemeData lightTheme = ThemeData(primarySwatch: primaryColor, brightness: Brightness.light);
+ThemeData darkTheme = ThemeData(primarySwatch: primaryColor, brightness: Brightness.dark);
 
 DateTime firstDay;
 
@@ -95,3 +98,6 @@ List<String> lessonTime = [
   '18:40 - 20:10',
   '20:15 - 21:45'
 ];
+
+List<IconData> modeIcons = [Icons.work, Icons.school, Icons.business];
+List<String> modeLabels = ['Преподаватель', 'Студент', 'Аудитория'];

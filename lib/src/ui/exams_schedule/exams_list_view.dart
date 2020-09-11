@@ -13,6 +13,23 @@ class ExamsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (_snapshot.hasData) {
+      if (_snapshot.data == 'Error') {
+        return new Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(bottom: 15), 
+                child: Text('Не удалось загрузить данные!'),
+              ),
+              
+              IconButton(icon: Icon(Icons.refresh), onPressed: (){ tabBarViewState.setState(() {}); })
+            ],
+          )
+        );
+      }
+
       List<Exam> exams = Exam.examsByType(_type, _snapshot.data.items);
 
       if (exams.isNotEmpty) {
@@ -33,6 +50,23 @@ class ExamsListView extends StatelessWidget {
     } else if (_snapshot.hasError) {
       return new Text(_snapshot.error.toString());
     }
+
+    // if (_snapshot.data == null) {
+    //   return new Center(
+    //     child: Column(
+    //       mainAxisSize: MainAxisSize.max,
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //       children: [
+    //         Padding(
+    //           padding: EdgeInsets.only(bottom: 15), 
+    //           child: Text('Не удалось загрузить данные!'),
+    //         ),
+            
+    //         IconButton(icon: Icon(Icons.refresh), onPressed: (){ tabBarViewState.setState(() {}); })
+    //       ],
+    //     )
+    //   );
+    // }
 
     return new Center(
       child: CircularProgressIndicator(),
