@@ -6,6 +6,7 @@ import 'package:schedule/src/app.dart';
 import 'package:schedule/src/ui/settings_page.dart';
 import 'package:schedule/src/ui/exams_schedule/exams_schedule_page.dart';
 import 'package:schedule/src/ui/lessons_schedule_page.dart';
+import 'lessons_distribution/lessons_distribution_page.dart';
 
 class ScheduleDrawer extends StatelessWidget {
   _launchURL() async {
@@ -21,7 +22,7 @@ class ScheduleDrawer extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: Column (
+            child: ListView (
               // padding: EdgeInsets.zero,
               children: <Widget>[
                 Row(
@@ -62,6 +63,14 @@ class ScheduleDrawer extends StatelessWidget {
                   }
                 ),
                 ListTile(
+                  title: Text('Распределение занятий'),
+                  leading: Icon(Icons.view_day),
+                  onTap: () {
+                    //Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => LessonsDistributionPage()));
+                  }
+                ),
+                ListTile(
                   title: Text('Настройки'),
                   leading: Icon(Icons.settings),
                   onTap: () {
@@ -76,9 +85,11 @@ class ScheduleDrawer extends StatelessWidget {
             child: Column(
               // crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Divider(),
+                Divider(
+                  height: 1,
+                ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 10),
+                  padding: EdgeInsets.only(bottom: 10, top: 5),
                   child: InkWell(
                     child: Column(
                       children: [

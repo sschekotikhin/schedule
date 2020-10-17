@@ -8,6 +8,7 @@ import 'package:schedule/src/resources/groups.dart';
 import 'package:schedule/src/resources/lessons.dart';
 import 'package:schedule/src/resources/teachers.dart';
 import 'package:schedule/src/resources/exams.dart';
+import 'package:schedule/src/resources/subjects_distribution_provider.dart';
 
 import 'package:schedule/src/resources/variables.dart';
 
@@ -85,6 +86,18 @@ class Bloc<T> {
 
       case 2:
         this._provider = ExamsProvider(requestType.classroom, classroom: classroom, housing: building);
+        break;
+    }
+  }
+
+  Bloc.distribution(int mode) {
+    switch (mode){
+      case 0:
+        this._provider = SubjectDistributionProvider(requestType.teacher, teacherId);
+        break;
+
+      case 1:
+        this._provider = SubjectDistributionProvider(requestType.student, groupId);
         break;
     }
   }
