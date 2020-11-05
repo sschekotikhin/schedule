@@ -20,16 +20,25 @@ class ExamsTabBarViewState extends State<ExamsTabBarView> {
     Bloc bloc = new Bloc.exams(scheduleMode);
     bloc.fetch();
 
-    return new StreamBuilder(
-      stream: bloc.data,
+    return new FutureBuilder(
+      future: bloc.fetch(),
       builder: (context, AsyncSnapshot snapshot) {
-        print(snapshot.data);
-        return TabBarView(
-          children: [
+        List<Widget> children = [];
+        if (snapshot.connectionState == ConnectionState.waiting) {
+         children = [
+            Center(child: CircularProgressIndicator()),
+            Center(child: CircularProgressIndicator()),
+            Center(child: CircularProgressIndicator()),
+          ];
+        } else if (snapshot.connectionState == ConnectionState.done) {
+          children = [
             ExamsListView(examType.test, snapshot),
             ExamsListView(examType.exam, snapshot),
             ExamsListView(examType.other, snapshot)
-          ]
+          ];
+        }
+        return TabBarView(
+          children: children
         );
       }
     );

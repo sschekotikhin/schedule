@@ -43,8 +43,8 @@ class LessonsDistributionPageState extends State<LessonsDistributionPage> {
     Bloc bloc = new Bloc.distribution(scheduleMode);
     bloc.fetch();
 
-    return new StreamBuilder(
-      stream: bloc.data,
+    return new FutureBuilder(
+      future: bloc.fetch(),
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == 'Error') {
