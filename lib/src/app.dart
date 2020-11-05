@@ -51,7 +51,7 @@ class App extends StatelessWidget {
     //       Duration(seconds: 1),
     //       () => true
     //     );
-    prefs = await SharedPreferences.getInstance();
+    if (prefs == null) prefs = await SharedPreferences.getInstance();
 
     divisionForStudentId = prefs.getInt('div_stud_id') ?? -1;
     course = prefs.getInt('course') ?? -1;

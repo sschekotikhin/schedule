@@ -5,6 +5,8 @@ import 'package:http/http.dart';
 import 'package:schedule/src/models/lesson.dart';
 import 'package:schedule/src/resources/variables.dart';
 
+import 'package:schedule/src/resources/schedule_changes_provider.dart';
+
 class Lessons {
   List<Lesson> _items = [];
 
@@ -70,6 +72,8 @@ class LessonsProvider {
       map.forEach((key, value) { list.add(value); });
       list.removeLast();
 
+      ScheduleChangesProvider.setHashSumFromResponse(response);
+      
       return new Lessons(list);
     } else {
       return new Lessons([]);
