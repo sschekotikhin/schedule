@@ -96,21 +96,34 @@ class ScheduleTabBarViewState extends State<ScheduleTabBarView> {
   @override
   Widget build(BuildContext context) {
     Bloc bloc = new Bloc.lessons(scheduleMode);
-    bloc.fetch();
+    // bloc.fetch();
 
-    return new StreamBuilder(
-      stream: bloc.data,
+    return new FutureBuilder(
+      future: bloc.fetch(),
       builder: (context, AsyncSnapshot snapshot) {
-        return TabBarView(
-          controller: _tabController,
-          children: [
+        List<Widget> children = [];
+        if (snapshot.connectionState == ConnectionState.waiting) {
+         children = [
+            Center(child: CircularProgressIndicator()),
+            Center(child: CircularProgressIndicator()),
+            Center(child: CircularProgressIndicator()),
+            Center(child: CircularProgressIndicator()),
+            Center(child: CircularProgressIndicator()),
+            Center(child: CircularProgressIndicator())
+          ];
+        } else if (snapshot.connectionState == ConnectionState.done) {
+          children = [
             LessonsListView(1, snapshot),
             LessonsListView(2, snapshot),
             LessonsListView(3, snapshot),
             LessonsListView(4, snapshot),
             LessonsListView(5, snapshot),
             LessonsListView(6, snapshot),
-          ]
+          ];
+        }
+        return TabBarView(
+          controller: _tabController,
+          children: children
         );
       }
     );

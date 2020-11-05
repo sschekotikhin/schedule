@@ -15,7 +15,7 @@ import 'package:schedule/src/resources/variables.dart';
 class Bloc<T> {
   var _provider;
   
-  final _divisionsFetcher = new PublishSubject<T>();
+  // final _divisionsFetcher = new PublishSubject<T>();
 
   Bloc(selectorMode mode) {
     switch (mode) {
@@ -102,14 +102,15 @@ class Bloc<T> {
     }
   }
   
-  Observable<T> get data => _divisionsFetcher.stream;
+  // Observable<T> get data => _divisionsFetcher.stream;
 
   fetch() async {
     T divisions = await _provider.fetch();
-    _divisionsFetcher.sink.add(divisions);
+    // _divisionsFetcher.sink.add(divisions);
+    return divisions;
   }
 
   dispose() {
-    _divisionsFetcher.close();
+    // _divisionsFetcher.close();
   }
 }

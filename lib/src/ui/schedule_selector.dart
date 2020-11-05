@@ -90,8 +90,8 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
                 ],
               ),
               Expanded(
-                child: _loadData ? new StreamBuilder(
-                  stream: bloc.data,
+                child: _loadData ? new FutureBuilder(
+                  future: bloc.fetch(),
                   builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
                       return buildList(snapshot);
