@@ -8,12 +8,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule/src/resources/variables.dart';
 
 class ScheduleChangesProvider {
-  static void setHashSumFromResponse(Response response) async {
-    print(response.body);
+  static int fDayMilliseconds;
+
+  static void setFDay(DateTime dateTime) {
+    fDayMilliseconds = dateTime.millisecondsSinceEpoch;
+    prefs.setInt('scfirstday', firstDay.millisecondsSinceEpoch);
+  }
+
+  static void setHashSumFromResponse(Response response) async {  
+    if (firstDay.millisecondsSinceEpoch != fDayMilliseconds) return;
+
     List<int> bytes = utf8.encode(response.body);
     String hash = sha256.convert(bytes).toString();
-
-    print("Hash: $hash");
     
     prefs.setString('schash', hash);
   }
@@ -39,11 +45,9 @@ class ScheduleChangesProvider {
       return false;
     }
 
-    print(response.body);
     List<int> bytes = utf8.encode(response.body);
     String newHash = sha256.convert(bytes).toString();
 
-    print("New hash: $newHash");
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String oldHash = prefs.getString('schash') ?? '';

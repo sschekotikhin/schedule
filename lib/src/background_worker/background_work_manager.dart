@@ -20,18 +20,11 @@ void callbackDispatcher() async {
         String building = prefs.getString('building') ?? '';
         String classroom = prefs.getString('classroom') ?? '';
 
-        DateTime firstDay = DateTime.now().subtract(new Duration(
-          days: DateTime.now().weekday == 7 ? -1 : DateTime.now().weekday - 1,
-          hours: DateTime.now().hour - 3,
-          minutes: DateTime.now().minute,
-          seconds: DateTime.now().second,
-          milliseconds: DateTime.now().millisecond,
-          microseconds: DateTime.now().microsecond
-        ));
+        int firstDay = prefs.getInt('scfirstday') ?? 0;
 
         String body = '';
 
-        bool isChanged = await ScheduleChangesProvider.chechHashSum(mode, firstDay.millisecondsSinceEpoch, groupId: groupId, teacherId: teacherId, classroom: classroom, housing: building);
+        bool isChanged = await ScheduleChangesProvider.chechHashSum(mode, firstDay, groupId: groupId, teacherId: teacherId, classroom: classroom, housing: building);
 
         body = isChanged ? 'Расписание изменилось!' : 'Изменений не найдено!';
 
