@@ -1,9 +1,3 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
-import 'package:flutter/cupertino.dart';
-import 'package:html/dom.dart';
-import 'package:html/dom_parsing.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 
@@ -275,8 +269,7 @@ decodeCp1251(codeUnits) {
 }
 
 class TeacgerInfoProvider {
-  static GetTeacherInfo(int teacherId) async {
-    // qteacherId = 6648;
+  static getTeacherInfo(int teacherId) async {
     String teacherInfoUrl = 'http://oreluniver.ru/employee/$teacherId';
 
     var response = await Client().get(teacherInfoUrl);

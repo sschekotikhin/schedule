@@ -1,4 +1,3 @@
-import 'package:rxdart/rxdart.dart';
 import 'package:schedule/src/resources/buildings.dart';
 import 'package:schedule/src/resources/classrooms.dart';
 import 'package:schedule/src/resources/courses.dart';
@@ -9,13 +8,12 @@ import 'package:schedule/src/resources/lessons.dart';
 import 'package:schedule/src/resources/teachers.dart';
 import 'package:schedule/src/resources/exams.dart';
 import 'package:schedule/src/resources/subjects_distribution_provider.dart';
+import 'package:schedule/src/saved_schedule/saved_schedule_provider.dart';
 
 import 'package:schedule/src/resources/variables.dart';
 
 class Bloc<T> {
   var _provider;
-  
-  // final _divisionsFetcher = new PublishSubject<T>();
 
   Bloc(selectorMode mode) {
     switch (mode) {
@@ -54,21 +52,17 @@ class Bloc<T> {
   }
 
   Bloc.lessons(int mode) {
-    //DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday));
 
     switch (mode){
       case 0:
-        // this._provider = LessonsProviderForTeacher(teacherId, firstDay.millisecondsSinceEpoch);
         this._provider = LessonsProvider(requestType.teacher, firstDay.millisecondsSinceEpoch, teacherId: teacherId);
         break;
 
       case 1:
-        // this._provider = LessonsProviderForStudents(groupId, firstDay.millisecondsSinceEpoch);
         this._provider = LessonsProvider(requestType.student, firstDay.millisecondsSinceEpoch, groupId: groupId);
         break;
 
       case 2:
-        // this._provider = LessonsProviderForClassroom(building, classroom, firstDay.millisecondsSinceEpoch);
         this._provider = LessonsProvider(requestType.classroom, firstDay.millisecondsSinceEpoch, housing: building, classroom: classroom);
         break;
     }
@@ -101,16 +95,26 @@ class Bloc<T> {
         break;
     }
   }
+
+  Bloc.saved(scheduleType _scheduleType, int mode) {
+    switch (mode){
+      case 0:
+        this._provider = SavedScheduleProvider(_scheduleType, requestType.teacher);
+        break;
+
+      case 1:
+        this._provider = SavedScheduleProvider(_scheduleType, requestType.student);
+        break;
+
+      case 2:
+        this._provider = SavedScheduleProvider(_scheduleType, requestType.classroom);
+        break;
+    }
+  }
   
-  // Observable<T> get data => _divisionsFetcher.stream;
 
   fetch() async {
     T divisions = await _provider.fetch();
-    // _divisionsFetcher.sink.add(divisions);
     return divisions;
-  }
-
-  dispose() {
-    // _divisionsFetcher.close();
   }
 }

@@ -3,6 +3,8 @@ import 'package:http/http.dart';
 import 'package:schedule/src/models/exam.dart';
 import 'package:schedule/src/resources/variables.dart';
 
+import 'package:schedule/src/saved_schedule/schedule_storage.dart';
+
 
 class Exams {
   List<Exam> _items = [];
@@ -65,6 +67,8 @@ class ExamsProvider {
       // list.removeLast();
 
       // return new Exams(list);
+      if (prefs.getBool('setting_save_locally') ?? false) ScheduleStorage.saveSchedule(scheduleType.exams, _requestType, utf8.decode(response.bodyBytes));
+
       return new Exams(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       return new Exams([]);

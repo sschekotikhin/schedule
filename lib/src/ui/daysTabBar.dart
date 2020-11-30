@@ -68,8 +68,7 @@ class DaysTabBarState extends State<DaysTabBar> with SingleTickerProviderStateMi
   }
   
   @override
-  Widget build(BuildContext context) { 
-    //DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday));
+  Widget build(BuildContext context) {
     return  TabBar(
       controller: _daysTabController,
       isScrollable: true,
@@ -99,7 +98,7 @@ class ScheduleTabBarViewState extends State<ScheduleTabBarView> {
 
   @override
   Widget build(BuildContext context) {
-    Bloc bloc = new Bloc.lessons(scheduleMode);
+    Bloc bloc = savedScheduleMode ? Bloc.saved(scheduleType.lessons, scheduleMode) : Bloc.lessons(scheduleMode);
     // bloc.fetch();
 
     return new FutureBuilder(

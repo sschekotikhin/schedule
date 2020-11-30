@@ -12,6 +12,10 @@ class ExamsAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class ExamsAppBarState extends State<ExamsAppBar> {
+  ExamsAppBarState() {
+    appbarState = this;
+  }
+
   Widget buildModeSelectorItem(int value) => Row(
     mainAxisSize: MainAxisSize.max,
     mainAxisAlignment: MainAxisAlignment.start,
@@ -35,12 +39,13 @@ class ExamsAppBarState extends State<ExamsAppBar> {
         ]
       ),
       actions: <Widget>[
-        // new IconButton(icon: new Icon(null), onPressed: null),
         IconButton(
           icon: Icon(Icons.refresh),
           tooltip: 'Обновить', 
           onPressed: (){
+            savedScheduleMode = false; 
             tabBarViewState.setState(() {});
+            appbarState.setState((){});
           }
         ),
         PopupMenuButton<int>(

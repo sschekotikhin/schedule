@@ -16,7 +16,7 @@ class TeacherPage extends StatelessWidget {
         leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () {Navigator.pop(context);})
       ),
       body: FutureBuilder(
-        future: TeacgerInfoProvider.GetTeacherInfo(teacherId),
+        future: TeacgerInfoProvider.getTeacherInfo(teacherId),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             List<Widget> positionsWidgets = [];

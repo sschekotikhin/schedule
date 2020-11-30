@@ -10,6 +10,59 @@ class ExamsListView extends StatelessWidget {
 
   ExamsListView(this._type, this._snapshot);
 
+  Widget buildUpdateButton() {
+    return IconButton(icon: Icon(Icons.refresh), onPressed: (){
+      savedScheduleMode = false; 
+      tabBarViewState.setState(() {}); 
+      appbarState.setState((){});
+    });
+  }
+
+  Widget buildUpdateMessage(BuildContext context) {
+    return new Card (
+      elevation: 0.0,
+      margin: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
+      shape: RoundedRectangleBorder (borderRadius: lessonCardRadius),
+      child: Container(
+        decoration: BoxDecoration(border: Border.all(color: Theme.of(context).primaryColor, width: 2.0), borderRadius: lessonCardRadius),
+        padding: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
+        // alignment: Alignment.center,
+        child:Row (
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Сохраненное расписание!'),
+            buildUpdateButton()
+          ],
+        ),
+      )
+    );
+  }
+
+  Widget buildExamsList(BuildContext context, List<Exam> exams) {
+    return new Column(
+      children: <Widget>[
+        savedScheduleMode ? buildUpdateMessage(context) : Container(),
+        Expanded(
+          child: exams.isNotEmpty ? 
+            ListView.builder(
+              itemCount: exams.length,
+              itemBuilder: (BuildContext context, int index) {
+                return new Column(
+                  children: [
+                    ExamWidget(exams[index])
+                  ]
+                );     
+              }
+            )
+          : new Center(
+            child: Text('Занятий не найдено')
+          )
+        )
+      ]
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_snapshot.hasData) {
@@ -23,50 +76,41 @@ class ExamsListView extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 15), 
                 child: Text('Не удалось загрузить данные!'),
               ),
-              
-              IconButton(icon: Icon(Icons.refresh), onPressed: (){ tabBarViewState.setState(() {}); })
+              buildUpdateButton(),
+              prefs.getBool('setting_save_locally') ?? false ? Padding(
+                padding: EdgeInsets.only(top: 15),
+                child:  OutlineButton(
+                  child: Text('Сохраненное расписание'),
+                  onPressed: (){
+                    savedScheduleMode = true;
+                    tabBarViewState.setState((){});
+                  }
+                )
+              ) : Container()
+            ],
+          )
+        );
+      } else if (_snapshot.data == savedDataError) {
+        return new Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(bottom: 15), 
+                child: Text('Сохраненные данные отсутствуют!'),
+              ),
+              buildUpdateButton(),
             ],
           )
         );
       }
 
       List<Exam> exams = Exam.examsByType(_type, _snapshot.data.items);
-
-      if (exams.isNotEmpty) {
-        return ListView.builder(
-          itemCount: exams.length,
-          itemBuilder: (BuildContext context, int index) {
-            return new Column(
-              children: [
-                ExamWidget(exams[index])
-              ]);     
-          }
-        );
-      } else {
-        return new Center(
-          child: Text('Занятий не найдено')
-        );
-      }
+      return buildExamsList(context, exams);
     } else if (_snapshot.hasError) {
-      return new Text(_snapshot.error.toString());
+      return new Center(child: Text('Ошибка!'));
     }
-
-    // if (_snapshot.data == null) {
-    //   return new Center(
-    //     child: Column(
-    //       mainAxisSize: MainAxisSize.max,
-    //       mainAxisAlignment: MainAxisAlignment.center,
-    //       children: [
-    //         Padding(
-    //           padding: EdgeInsets.only(bottom: 15), 
-    //           child: Text('Не удалось загрузить данные!'),
-    //         ),
-            
-    //         IconButton(icon: Icon(Icons.refresh), onPressed: (){ tabBarViewState.setState(() {}); })
-    //       ],
-    //     )
-    //   );
-    // }
 
     return new Center(
       child: CircularProgressIndicator(),

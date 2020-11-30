@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:schedule/src/resources/variables.dart';
 import 'package:schedule/src/ui/schedule_selector_button.dart';
 
-import 'lessons_distribution_page.dart';
-
 class LDAppBar extends StatefulWidget implements PreferredSizeWidget {
   Size get preferredSize => new Size.fromHeight(50.0);
 
@@ -35,7 +33,6 @@ class LDAppBarState extends State<LDAppBar> {
         ]
       ),
       actions: <Widget>[
-        // new IconButton(icon: new Icon(null), onPressed: null),
         IconButton(
           icon: Icon(Icons.refresh),
           tooltip: 'Обновить', 
@@ -55,10 +52,6 @@ class LDAppBarState extends State<LDAppBar> {
               child: buildModeSelectorItem(1),
               value: 1,
             ),
-            // PopupMenuItem(
-            //   child: buildModeSelectorItem(2),
-            //   value: 2,
-            // )
           ],
           onSelected: (value) {
             setState(() {
