@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:schedule/src/ui/daysTabBar.dart';
-import 'package:schedule/src/ui/schedule_bottom_navbar.dart';
 import 'package:schedule/src/ui/schedule_selector.dart';
 import 'package:schedule/src/ui/schedule_selector_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +16,11 @@ enum selectorMode {
   teacher,
   building,
   classroom
+}
+
+enum scheduleType {
+  lessons,
+  exams
 }
 
 enum requestType {
@@ -52,14 +56,14 @@ ScheduleSelectorState scheduleSelectorState;
 
 ScheduleSelectorButtonState selectorButtonState;
 
-ScheduleBottomNavBarState bottomNavBarState;
+var bottomNavBarState;
 
 DaysTabBarState daysTabBarState;
 
 TabController tabController;
 
-// ScheduleTabBarViewState tabBarViewState;
 var tabBarViewState;
+var appbarState;
 
 MaterialColor primaryColor = MaterialColorGenerator.generateMaterialColor(Color.fromARGB(255, 31, 75, 153));
 ThemeData lightTheme = ThemeData(primarySwatch: primaryColor, brightness: Brightness.light);
@@ -84,8 +88,6 @@ int divisionForStudentId = -1, course = -1, groupId = -1, //load
 
 String building = '', classroom = ''; //load
 
-// String nextDayTime = '21:00';
-
 List<String> daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 
 List<String> lessonTime = [
@@ -101,3 +103,6 @@ List<String> lessonTime = [
 
 List<IconData> modeIcons = [Icons.work, Icons.school, Icons.business];
 List<String> modeLabels = ['Преподаватель', 'Студент', 'Аудитория'];
+
+bool savedScheduleMode = false;
+String savedDataError = 'savedDataError';

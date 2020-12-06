@@ -80,7 +80,7 @@ class LessonsDistributionPageState extends State<LessonsDistributionPage> {
             );
           }
         } else if (snapshot.hasError) {
-          return new Text(snapshot.error.toString());
+          return new Center(child: Text('Ошибка!'));
         }
 
         return new Center(
@@ -93,18 +93,6 @@ class LessonsDistributionPageState extends State<LessonsDistributionPage> {
   @override
   Widget build(BuildContext context) {
     if (scheduleMode == 2) scheduleMode = 0;
-    // return Scaffold(
-    //   // appBar: AppBar(
-    //   //   title: Text('Распределение занятий'),
-    //   //   leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () {Navigator.pop(context);})
-    //   // ),
-    //   appBar: LDAppBar(),
-    //   body: ListView(
-    //     children: [
-    //       buildSubjectTile()
-    //     ]
-    //   ),
-    // );
     return Scaffold(
       body: SlidingUpPanel(
         controller: panelController,

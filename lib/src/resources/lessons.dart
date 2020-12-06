@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:schedule/src/models/lesson.dart';
 import 'package:schedule/src/resources/variables.dart';
 
 import 'package:schedule/src/resources/schedule_changes_provider.dart';
+import 'package:schedule/src/saved_schedule/schedule_storage.dart';
 
 class Lessons {
   List<Lesson> _items = [];
@@ -72,8 +72,10 @@ class LessonsProvider {
       map.forEach((key, value) { list.add(value); });
       list.removeLast();
 
-      ScheduleChangesProvider.setHashSumFromResponse(response);
+      if (!savedScheduleMode) ScheduleChangesProvider.setHashSumFromResponse(response);
       
+      if (prefs.getBool('setting_save_locally') ?? false) ScheduleStorage.saveSchedule(scheduleType.lessons, _requestType, utf8.decode(response.bodyBytes));
+
       return new Lessons(list);
     } else {
       return new Lessons([]);

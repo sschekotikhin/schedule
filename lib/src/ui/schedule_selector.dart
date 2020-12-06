@@ -96,7 +96,7 @@ class ScheduleSelectorState extends State<ScheduleSelector> {
                     if (snapshot.hasData) {
                       return buildList(snapshot);
                     } else if (snapshot.hasError) {
-                      return new Text(snapshot.error.toString());
+                      return new Center(child: Text('Ошибка!'));
                     }
 
                     return new Center(

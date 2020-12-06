@@ -28,16 +28,11 @@ class App extends StatelessWidget {
             return LessonsSchedulePage();
           } 
           else if (snapshot.hasError) {
-            return new Text(snapshot.error.toString());
+            return new Center(child: Text('Ошибка!'));
           }
 
           return new Scaffold(
             body: Center(
-              // child: Column(
-              //   children: [
-              //     Expanded(child: Image.asset('assets/images/logo_transparent.png'))
-              //   ]
-              // ),
               child: CircularProgressIndicator(),
             ),
           );

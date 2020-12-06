@@ -37,12 +37,6 @@ void callbackDispatcher() async {
 }
 
 class BackgroundWorkManager {
-  // static final List<String> _workerNames = ['ScheduleChangesManager'];
-  // static final List<String> _workerTags = ['ScheduleChanges'];
-
-  // static List<String> get names => _workerNames;
-  // static List<String> get tags => _workerTags;
-
   static void initWorkManager() async {
     WidgetsFlutterBinding.ensureInitialized(); 
     Workmanager.initialize(
