@@ -6,6 +6,15 @@ class ScheduleSelectorButton extends StatefulWidget {
 
   ScheduleSelectorButton(this._tabIndex);
 
+  static String getHeader(tabIndex) {
+    List<String> headers = prefs.getStringList('headers');
+      if (headers != null && headers[tabIndex].isNotEmpty) {
+        return prefs.getStringList('headers')[tabIndex];
+      } else {
+        return selectorHeaders[tabIndex];
+      }
+  }
+
   @override
   createState() => new ScheduleSelectorButtonState(_tabIndex);
 }
@@ -13,7 +22,6 @@ class ScheduleSelectorButton extends StatefulWidget {
 class ScheduleSelectorButtonState extends State<ScheduleSelectorButton> {
   int _currentTabIndex = 0;
   String _header;
-  List<String> _headers;
 
   ScheduleSelectorButtonState(this._currentTabIndex) {
     selectorButtonState = this;
@@ -25,18 +33,14 @@ class ScheduleSelectorButtonState extends State<ScheduleSelectorButton> {
   @override
   Widget build(BuildContext context) {
     if (prefs != null) {
-      _headers = prefs.getStringList('headers');
-      if (_headers != null && _headers[_currentTabIndex].isNotEmpty) {
-        _header = prefs.getStringList('headers')[_currentTabIndex];
-      } else {
-        _header = selectorHeaders[_currentTabIndex];
-      }
+      _header = ScheduleSelectorButton.getHeader(_currentTabIndex);
       return new FlatButton(
-        onPressed: () {
+        onPressed: savedScheduleMode ? null : () {
           panelController.isPanelOpen ? panelController.close() : panelController.open();
         }, 
         child: new Text(_header, textAlign: TextAlign.center), 
-        textColor: Theme.of(context).primaryTextTheme.button.color
+        textColor: Theme.of(context).primaryTextTheme.button.color,
+        disabledTextColor: Theme.of(context).primaryTextTheme.button.color,
       );
     } else {
       return new Text('Загрузка...');

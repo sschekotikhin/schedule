@@ -32,8 +32,14 @@ dependencies:
 
   sliding_up_panel: ^1.0.0
   shared_preferences: ^0.5.6+2
+  path_provider: ^1.6.10
 
   url_launcher: ^5.5.1
+
+  flutter_local_notifications: ^3.0.1
+  workmanager: ^0.2.0
+
+  crypto: ^2.1.5
 
 dev_dependencies:
   flutter_test:
@@ -45,7 +51,10 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: 'lib\assets\icons\icon.png'
+  image_path_ios: 'assets\icons\icon.png'
+  image_path_android: 'assets\icons\icon.png'
+  adaptive_icon_background: 'assets\icons\adaptive\background.png'
+  adaptive_icon_foreground: 'assets\icons\adaptive\foreground.png'
 
 flutter_native_splash:
   image: assets/images/logo_transparent_white.png

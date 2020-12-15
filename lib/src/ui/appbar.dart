@@ -10,7 +10,9 @@ class ScheduleAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class ScheduleAppBarState extends State<ScheduleAppBar> with SingleTickerProviderStateMixin {
-  
+  ScheduleAppBarState() {
+    appbarState = this;
+  }
 
   Widget buildModeSelectorItem(int value) => Row(
     mainAxisSize: MainAxisSize.max,
@@ -31,7 +33,7 @@ class ScheduleAppBarState extends State<ScheduleAppBar> with SingleTickerProvide
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           new Expanded(
-            child: new ScheduleSelectorButton(scheduleMode)
+            child: ScheduleSelectorButton(scheduleMode)
           )
         ]
       ),
@@ -40,13 +42,16 @@ class ScheduleAppBarState extends State<ScheduleAppBar> with SingleTickerProvide
           icon: Icon(Icons.refresh),
           tooltip: 'Обновить', 
           onPressed: (){
-            tabBarViewState.setState(() {});
+            savedScheduleMode = false; 
+            tabBarViewState.setState((){});
+            appbarState.setState((){});
+            bottomNavBarState.setState((){});
           }
         ),
         new IconButton(
           icon: new Icon(Icons.calendar_today),
           tooltip: 'Выбрать дату',
-          onPressed: () {
+          onPressed: savedScheduleMode ? null : () {
             showDatePicker(
               context: context,
               locale: Locale('ru'), 

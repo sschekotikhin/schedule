@@ -28,16 +28,11 @@ class App extends StatelessWidget {
             return LessonsSchedulePage();
           } 
           else if (snapshot.hasError) {
-            return new Text(snapshot.error.toString());
+            return new Center(child: Text('Ошибка!'));
           }
 
           return new Scaffold(
             body: Center(
-              // child: Column(
-              //   children: [
-              //     Expanded(child: Image.asset('assets/images/logo_transparent.png'))
-              //   ]
-              // ),
               child: CircularProgressIndicator(),
             ),
           );
@@ -51,7 +46,7 @@ class App extends StatelessWidget {
     //       Duration(seconds: 1),
     //       () => true
     //     );
-    prefs = await SharedPreferences.getInstance();
+    if (prefs == null) prefs = await SharedPreferences.getInstance();
 
     divisionForStudentId = prefs.getInt('div_stud_id') ?? -1;
     course = prefs.getInt('course') ?? -1;

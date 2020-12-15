@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:schedule/src/blocs/bloc.dart';
 import 'package:schedule/src/resources/variables.dart';
 import 'package:schedule/src/ui/lessons_list_view.dart';
+import 'package:schedule/src/resources/schedule_changes_provider.dart';
 
 
 class DaysTabControllerState extends State with SingleTickerProviderStateMixin {
@@ -35,6 +36,9 @@ class DaysTabControllerState extends State with SingleTickerProviderStateMixin {
         if (day > 7) day = 7;
       }
     }
+
+    ScheduleChangesProvider.setFDay(firstDay);
+
     tabController.animateTo(day == 7 ? 0 : day - 1);
   }
 
@@ -64,8 +68,7 @@ class DaysTabBarState extends State<DaysTabBar> with SingleTickerProviderStateMi
   }
   
   @override
-  Widget build(BuildContext context) { 
-    //DateTime firstDay = DateTime.now().subtract(new Duration(days: DateTime.now().weekday));
+  Widget build(BuildContext context) {
     return  TabBar(
       controller: _daysTabController,
       isScrollable: true,
@@ -95,7 +98,7 @@ class ScheduleTabBarViewState extends State<ScheduleTabBarView> {
 
   @override
   Widget build(BuildContext context) {
-    Bloc bloc = new Bloc.lessons(scheduleMode);
+    Bloc bloc = savedScheduleMode ? Bloc.saved(scheduleType.lessons, scheduleMode) : Bloc.lessons(scheduleMode);
     // bloc.fetch();
 
     return new FutureBuilder(

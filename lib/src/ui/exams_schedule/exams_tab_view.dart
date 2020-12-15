@@ -17,7 +17,7 @@ class ExamsTabBarViewState extends State<ExamsTabBarView> {
 
   @override
   Widget build(BuildContext context) {
-    Bloc bloc = new Bloc.exams(scheduleMode);
+    Bloc bloc = savedScheduleMode ? Bloc.saved(scheduleType.exams, scheduleMode) : Bloc.exams(scheduleMode);
     bloc.fetch();
 
     return new FutureBuilder(

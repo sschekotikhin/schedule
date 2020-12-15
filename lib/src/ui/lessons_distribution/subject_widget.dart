@@ -91,12 +91,6 @@ class SubjectWidget extends StatelessWidget {
       children: [
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          // child: DataTable(
-          //   horizontalMargin: 15,
-          //   columnSpacing: 40,
-          //   columns: columns, 
-          //   rows: rows
-          // ),
           child: Column(
             children: [
               Container(

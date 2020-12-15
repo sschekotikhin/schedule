@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:schedule/src/resources/variables.dart';
+import 'package:schedule/src/background_worker/background_work_manager.dart';
+import 'package:schedule/src/saved_schedule/schedule_storage.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -11,6 +13,8 @@ class SettingsPageState extends State<SettingsPage> {
   bool _hideEmpty;
   bool _showNextDay;
   String _nextDayTime;
+  bool _checkSchedule;
+  bool _saveLocally;
 
   bool get getHideEmpty => _hideEmpty;
 
@@ -25,6 +29,20 @@ class SettingsPageState extends State<SettingsPage> {
     prefs.setString('setting_next_day_time', _nextDayTime);
   });
 
+  void _checkScheduleChanged(bool value) => setState(() {
+    _checkSchedule = value;
+    prefs.setBool('setting_check_schedule', value);
+
+    BackgroundWorkManager.setWorkState(0, value);
+  });
+
+  void _saveLocallyChanged(bool value) => setState((){
+    _saveLocally = value;
+    prefs.setBool('setting_save_locally', value);
+
+    if (value == false) ScheduleStorage.clearSavedSchedule();
+  });
+
 
   @override
   void initState() {
@@ -33,6 +51,8 @@ class SettingsPageState extends State<SettingsPage> {
     _hideEmpty = prefs.getBool('setting_hide_empty') ?? false;
     _showNextDay = prefs.getBool('setting_show_next_day') ?? false;
     _nextDayTime = prefs.getString('setting_next_day_time') ?? '21:00';
+    _checkSchedule = prefs.getBool('setting_check_schedule') ?? false;
+    _saveLocally = prefs.getBool('setting_save_locally') ?? false;
   }
 
   @override
@@ -89,7 +109,23 @@ class SettingsPageState extends State<SettingsPage> {
                   )
                 ]
               ),
-              Divider(thickness: 1.5)
+              Divider(thickness: 1.5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(child: Text('Проверять изменения в расписании', style: TextStyle(fontSize: 16))), 
+                  Switch(value: _checkSchedule, onChanged: _checkScheduleChanged)
+                ]
+              ),
+              Divider(thickness: 1.5),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(child: Text('Сохранять расписание', style: TextStyle(fontSize: 16))), 
+                    Switch(value: _saveLocally, onChanged: _saveLocallyChanged)
+                  ]
+                ),
+                Divider(thickness: 1.5),
             ]
           )
         )

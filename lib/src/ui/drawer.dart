@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:schedule/src/resources/variables.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:schedule/src/app.dart';
 import 'package:schedule/src/ui/settings_page.dart';
 import 'package:schedule/src/ui/exams_schedule/exams_schedule_page.dart';
 import 'package:schedule/src/ui/lessons_schedule_page.dart';
